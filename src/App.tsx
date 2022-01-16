@@ -1,17 +1,16 @@
 // @ts-nocheck
-import { Component } from "react"
+import { Component } from "react";
 
-import store, { persistor } from "./reduxStore/store"
-import { Provider } from "react-redux"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import { PersistGate } from "redux-persist/integration/react"
+import store, { persistor } from "./reduxStore/store";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 
-import "bootstrap/dist/css/bootstrap.min.css"
-import Home from "./pages/home"
-import Header from "./components/Header"
-import Footer from "./components/Footer"
-import Book from "./pages/book"
-import BookConfirm from "./pages/book/BookConfirm"
+import Home from "./pages/home";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Book from "./pages/book";
+import BookConfirm from "./pages/book/BookConfirm";
 
 class App extends Component {
   render() {
@@ -29,8 +28,8 @@ class App extends Component {
           </Router>
         </PersistGate>
       </Provider>
-    )
+    );
   }
 }
 
-export default App
+export default App;

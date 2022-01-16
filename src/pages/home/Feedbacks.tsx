@@ -1,7 +1,6 @@
-
-import styled from "styled-components"
-import { Carousel } from "react-bootstrap"
-import review1 from "../../assets/images/review_1.png"
+import styled from "styled-components";
+import { Carousel } from "rsuite";
+import review1 from "../../assets/images/review_1.png";
 const Section = styled.section`
   & > div {
     max-width: 70%;
@@ -18,7 +17,6 @@ const Section = styled.section`
     & > div {
       display: flex;
       justify-content: space-between;
-      
     }
 
     & > .slide {
@@ -30,28 +28,33 @@ const Section = styled.section`
       & > a {
         width: 50px;
         height: 50px;
-        background-color: #EEAD4B;
+        background-color: #eead4b;
         border-radius: 50%;
         top: 50%;
         transform: translateY(-50%);
       }
     }
   }
-`
+`;
 
 const Feedbacks = () => {
-  return <Section>
-    <div>
-      <h4>NHẬN XÉT TỪ KHÁCH HÀNG</h4>
-      <Carousel>
-          <Carousel.Item interval={1000}>
-            <img className="d-block w-100" src={review1} alt="First slide"/>
-          </Carousel.Item>
-          <Carousel.Item interval={1000}>
-            <img className="d-block w-100" src={review1} alt="First slide"/>
-          </Carousel.Item>
-      </Carousel>
-    </div>
-  </Section>
-}
-export default Feedbacks
+  return (
+    <Section>
+      <div>
+        <h4>NHẬN XÉT TỪ KHÁCH HÀNG</h4>
+        <Carousel
+          autoplay
+          style={{ width: "716px", height: "322px", margin: "auto" }}
+        >
+          <div>
+            <img className="d-block w-100" src={review1} alt="First slide" />
+          </div>
+          <div>
+            <img className="d-block w-100" src={review1} alt="First slide" />
+          </div>
+        </Carousel>
+      </div>
+    </Section>
+  );
+};
+export default Feedbacks;
