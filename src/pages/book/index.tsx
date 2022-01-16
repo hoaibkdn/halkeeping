@@ -16,6 +16,7 @@ import {
   CheckboxGroup,
 } from "rsuite";
 import { asyncCheckPhone } from "../../components/Form/form";
+import moment from "moment";
 
 const Container = styled.div`
   width: 60%;
@@ -312,6 +313,9 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
                 label="Ngày làm*"
                 accepter={DatePicker}
                 name="date"
+                disabledDate={(date: any) =>
+                  moment(date).isBefore(moment(new Date()).subtract(1, "days"))
+                }
                 placeholder="Chọn ngày làm"
               />
             </Col>
@@ -346,6 +350,8 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
               label="Thời gian làm*"
               name="time"
               format="hh:mm"
+              ranges={[]}
+              disabledHours={(hour: any) => hour < 6 || hour > 18}
               accepter={DatePicker}
               placeholder="Chọn thời gian làm"
             />

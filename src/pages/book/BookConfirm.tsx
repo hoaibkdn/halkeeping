@@ -50,11 +50,12 @@ const Text = styled.label`
 const BookConfirm = (props: Props) => {
   const [processing, setProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const handleClose = () => setIsSuccess(false);
   const history = useHistory();
 
   useEffect(() => {
-    if (isEmpty(data)) {
-      history.push("/");
+    if (!data?.date || !data?.time || !data?.hour) {
+      history.push("/book");
     }
   }, [isSuccess]);
 
@@ -73,14 +74,6 @@ const BookConfirm = (props: Props) => {
       tool += `Máy hút bụi vừa (hút thảm hoặc ghế sofa, nệm) - 30.000 vnd`;
       break;
   }
-
-  const isEmpty = (obj: object) => {
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(prop)) return false;
-    }
-
-    return true;
-  };
 
   const onBook = async () => {
     setProcessing(true);
@@ -111,7 +104,7 @@ const BookConfirm = (props: Props) => {
 
   return (
     <>
-      <Modal open={isSuccess}>
+      <Modal open={isSuccess} onClose={handleClose}>
         <Modal.Header style={{ display: "flex", justifyContent: "center" }}>
           <Modal.Title style={{ textAlign: "center", width: "80%" }}>
             Halkeeping xin chân thành cảm ơn quý khách đã tin cậy sử dụng dịch
@@ -211,6 +204,7 @@ const BookConfirm = (props: Props) => {
               width: "150px",
               height: "60px",
             }}
+            disabled={processing}
             onClick={onBook}
           >
             {processing ? <Loader /> : "Đặt ngay"}

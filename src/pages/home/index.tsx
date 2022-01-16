@@ -1,13 +1,13 @@
-import Banner from "./Banner"
-import Services from "./Services"
-import Advantages from "./Advantages"
-import styled from "styled-components"
-import Feedbacks from "./Feedbacks"
-import Slide from "./Slide"
-import btn_background from "../../assets/images/btn-background.png"
-import { connect } from "react-redux"
-import { resetBook } from "../redux/actions"
-import { FC, useEffect } from "react"
+import Banner from "./Banner";
+import Services from "./Services";
+import Advantages from "./Advantages";
+import styled from "styled-components";
+import Feedbacks from "./Feedbacks";
+import Slide from "./Slide";
+import btn_background from "../../assets/images/btn-background.png";
+import { connect } from "react-redux";
+import { resetBook } from "../redux/actions";
+import { FC, useEffect } from "react";
 
 const BgButton = styled.div`
   position: relative;
@@ -38,12 +38,12 @@ const BgButton = styled.div`
       text-decoration: none;
     }
   }
-`
+`;
 
 const Home: FC<any> = ({ resetBook }) => {
   useEffect(() => {
-    resetBook()
-  }, [])
+    resetBook();
+  }, []);
 
   return (
     <>
@@ -57,11 +57,11 @@ const Home: FC<any> = ({ resetBook }) => {
       </BgButton>
       <Feedbacks />
     </>
-  )
-}
+  );
+};
 
 const mapDispatchToProps = {
   resetBook,
-}
+};
 
-export default connect(null, mapDispatchToProps)(Home as any)
+export default connect(null, mapDispatchToProps)(Home as any);
