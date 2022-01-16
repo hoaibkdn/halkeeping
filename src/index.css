@@ -19,3 +19,8 @@ code {
 .rs-modal-header .rs-modal-title {
   white-space: inherit;
 }
+
+.rs-form-control .rs-picker-has-value .rs-btn .rs-picker-toggle-value,
+.rs-picker-has-value .rs-picker-toggle .rs-picker-toggle-value {
+  color: inherit;
+}
