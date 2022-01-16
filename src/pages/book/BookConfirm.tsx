@@ -1,20 +1,21 @@
-import styled from "styled-components"
-import { useHistory } from "react-router-dom"
-import { Button, Modal, Spinner } from "react-bootstrap"
-import { PublicReducer } from "../redux/reducer"
-import { connect } from "react-redux"
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+import { PublicReducer } from "../redux/reducer";
+import { connect } from "react-redux";
 
-import { createJob } from "../redux/actions"
-import { useState } from "react"
-import { useEffect } from "react"
+import { createJob } from "../redux/actions";
+import { useState } from "react";
+import { useEffect } from "react";
+import moment from "moment";
+import { Modal, Button, Loader } from "rsuite";
 
 interface State {
-  publicPages: PublicReducer
+  publicPages: PublicReducer;
 }
 
 interface Props {
-  createJob: (formData: Record<string, any>) => { error: boolean }
-  data: any
+  createJob: (formData: Record<string, any>) => { error: boolean };
+  data: any;
 }
 
 const Container = styled.div`
@@ -22,93 +23,95 @@ const Container = styled.div`
   margin: 110px auto;
   background-color: #fffbf4;
   padding: 40px 50px;
-`
+`;
 
 const Title = styled.h6`
   color: #444444;
   margin-bottom: 30px;
   font-size: 28px;
-`
+`;
 
 const Row = styled.div`
   margin-bottom: 20px;
   display: flex;
-`
+`;
 
 const Label = styled.label`
   color: #444444;
   font-size: 17px;
   margin-right: 30px;
-`
+`;
 
 const Text = styled.label`
   color: #757575;
   font-size: 17px;
-`
+`;
 
 const BookConfirm = (props: Props) => {
-  const [processing, setProcessing] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-  const history = useHistory()
+  const [processing, setProcessing] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     if (isEmpty(data)) {
-      history.push("/")
+      history.push("/");
     }
-  }, [isSuccess])
+  }, [isSuccess]);
 
-  const data = props.data || {}
-  let countTool = 0
-  let tool = ""
+  const data = props.data || {};
+  const date = moment(data.date).format("YYYY-MM-DD");
+  const time = moment(data.time).format("hh:mm");
+  let countTool = 0;
+  let tool = "";
   switch (true) {
     case data.tool:
-      countTool += 30000
-      tool += `Có mang dụ cụ cơ bản (+ 30.000)`
-      break
+      countTool += 30000;
+      tool += `Có mang dụ cụ cơ bản (+ 30.000)`;
+      break;
     case data.cleanerTool:
-      countTool += 30000
-      tool += `Máy hút bụi vừa (hút thảm hoặc ghế sofa, nệm) - 30.000 vnd`
-      break
+      countTool += 30000;
+      tool += `Máy hút bụi vừa (hút thảm hoặc ghế sofa, nệm) - 30.000 vnd`;
+      break;
   }
 
   const isEmpty = (obj: object) => {
     for (var prop in obj) {
-      if (obj.hasOwnProperty(prop)) return false
+      if (obj.hasOwnProperty(prop)) return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   const onBook = async () => {
-    setProcessing(true)
+    setProcessing(true);
     const uploadData = {
       phone: data.phone,
       name: data.name,
       address: data.address,
       email: data.email,
-      preferDate: data.date,
-      durationTime: data.durationTimeApi,
-      time: data.time,
+      preferDate: date,
+      time: time,
+      durationTime: (data.hour || 0) * 60 + (data.minutes || 0),
       cleaningTool: {
         basic: data.tool,
         vacuum: data.cleanerTool,
       },
       unit: "vnd",
       note: data.note,
-    }
+    };
 
-    const res = await props.createJob(uploadData)
+    const res = await props.createJob(uploadData);
 
-    setProcessing(false)
+    setProcessing(false);
 
     if (res.error === false) {
-      setIsSuccess(true)
+      setIsSuccess(true);
     }
-  }
+  };
 
   return (
     <>
-      <Modal show={isSuccess} animation size="lg">
+      <Modal open={isSuccess}>
         <Modal.Header style={{ display: "flex", justifyContent: "center" }}>
           <Modal.Title style={{ textAlign: "center", width: "80%" }}>
             Halkeeping xin chân thành cảm ơn quý khách đã tin cậy sử dụng dịch
@@ -120,9 +123,10 @@ const BookConfirm = (props: Props) => {
         </Modal.Body>
         <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
           <Button
+            appearance="primary"
             style={{ width: "100px" }}
             onClick={() => {
-              history.push("/")
+              history.push("/");
             }}
           >
             OK
@@ -141,11 +145,11 @@ const BookConfirm = (props: Props) => {
         </Row>
         <Row>
           <Label>Ngày làm</Label>
-          <Text>{data.date}</Text>
+          <Text>{date}</Text>
         </Row>
         <Row>
           <Label>Thời gian làm</Label>
-          <Text>{data.time}</Text>
+          <Text>{time}</Text>
         </Row>
         <Row>
           <Label>Số giờ làm</Label>
@@ -203,25 +207,26 @@ const BookConfirm = (props: Props) => {
             style={{
               borderColor: "#042C41",
               backgroundColor: "#042C41",
+              color: "#fff",
               width: "150px",
               height: "60px",
             }}
             onClick={onBook}
           >
-            {processing ? <Spinner animation="border" /> : "Đặt ngay"}
+            {processing ? <Loader /> : "Đặt ngay"}
           </Button>
         </div>
       </Container>
     </>
-  )
-}
+  );
+};
 
 const mapDispatchToProps = {
   createJob,
-}
+};
 
 const mapStateToProps = (state: State) => ({
   data: state?.publicPages?.book,
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookConfirm as any)
+export default connect(mapStateToProps, mapDispatchToProps)(BookConfirm as any);
