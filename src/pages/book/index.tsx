@@ -14,6 +14,7 @@ import {
   DatePicker,
   Checkbox,
   CheckboxGroup,
+  Modal,
 } from "rsuite";
 import { asyncCheckPhone } from "../../components/Form/form";
 import moment from "moment";
@@ -131,7 +132,9 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
         label: k.name,
       }));
   };
-  const [wards, setWardsOptions] = useState(getWards(data?.book?.district));
+  const [wards, setWardsOptions] = useState([]);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const handleClose = () => setIsSuccess(false);
 
   useEffect(() => {
     getProvinces();
@@ -142,6 +145,9 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
         vacuum: formValue?.tool?.includes("toolCleaner"),
       },
     });
+    setWardsOptions(getWards(data?.book?.district));
+
+    return () => {};
   }, []);
 
   const onChangeDistricts = useCallback((val: string) => {
@@ -154,17 +160,18 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
     Number(formValue?.hour || 0) * 60 + Number(formValue?.minutes || 0);
 
   const history = useHistory();
-
   const onSubmit = () => {
     const data = {
       ...formValue,
-      address: `${
-        districts?.filter((i: any) => i.value === formValue.district)[0]?.label
-      }, ${
+      address: `${formValue.numberHouse}, 
+      ${
         getWards(formValue.district).filter(
           (i: any) => i.value === formValue.ward
         )[0]?.label
-      }, ${formValue.numberHouse}`,
+      }, 
+      ${
+        districts?.filter((i: any) => i.value === formValue.district)[0]?.label
+      }`,
       durationTime: `${formValue.hour} tiếng ${formValue.minutes || 0} phút`,
       payMethod: formValue.pay || "Tiền mặt",
       countPay: basicInfo?.total | 0,
@@ -187,8 +194,8 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
       getBasicInfo({
         durationTime,
         cleaningTool: {
-          basic: formValue.tool,
-          vacuum: formValue.cleanerTool,
+          basic: formValue?.tool?.includes("toolBasic"),
+          vacuum: formValue?.tool?.includes("toolCleaner"),
         },
       });
     }
@@ -197,8 +204,8 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
       getBasicInfo({
         durationTime: getDurationTime(),
         cleaningTool: {
-          basic: value?.includes("toolBasic"),
-          vacuum: value.includes("toolCleaner"),
+          basic: !!value?.filter((i: any) => i === "toolBasic").length,
+          vacuum: !!value?.filter((i: any) => i === "toolCleaner").length,
         },
       });
     }
@@ -225,7 +232,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
 
   const handleSubmit = () => {
     if ((formRef?.current as any)?.check()) {
-      onSubmit();
+      setIsSuccess(true);
     }
   };
 
@@ -418,6 +425,28 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
           </Row>
         </Form>
       </Container>
+
+      <Modal size="xs" open={isSuccess} onClose={handleClose}>
+        <Modal.Header style={{ display: "flex", justifyContent: "center" }}>
+          <Modal.Title
+            style={{ textAlign: "center", width: "80%", paddingBottom: "30px" }}
+          >
+            Are you sure you want to leave this page?
+          </Modal.Title>
+        </Modal.Header>
+        {/* <Modal.Body style={{ textAlign: "center" }}>
+          Chúng tôi sẽ sớm liên hệ để hỗ trợ thông tin chi tiết.
+        </Modal.Body> */}
+        <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            appearance="primary"
+            style={{ width: "100px" }}
+            onClick={() => onSubmit()}
+          >
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

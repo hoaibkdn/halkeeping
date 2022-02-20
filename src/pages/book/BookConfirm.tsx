@@ -86,8 +86,8 @@ const BookConfirm = (props: Props) => {
       time: time,
       durationTime: (data.hour || 0) * 60 + (data.minutes || 0),
       cleaningTool: {
-        basic: data.tool,
-        vacuum: data.cleanerTool,
+        basic: data?.tool?.includes("toolBasic"),
+        vacuum: data?.tool?.includes("toolCleaner"),
       },
       unit: "vnd",
       note: data.note,
