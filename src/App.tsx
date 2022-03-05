@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Book from "./pages/book";
 import BookConfirm from "./pages/book/BookConfirm";
+import Login from './pages/login'
 
 class App extends Component {
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
               <Route exact path="/" component={Home} />
               <Route exact path="/book" component={Book} />
               <Route exact path="/book-confirm" component={BookConfirm} />
+              <Route exact path="/login" component={Login} />
             </Switch>
             <Footer />
           </Router>
