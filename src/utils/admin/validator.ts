@@ -61,6 +61,7 @@ export function validateForm(
       formError[item].error = getEmailError({
         type: "email",
         value: formData[item].value,
+        required: true,
       })
     }
 
