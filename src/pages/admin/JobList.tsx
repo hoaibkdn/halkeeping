@@ -1,153 +1,145 @@
 // @ts-nocheck
-import React from "react"
-import { connect } from "react-redux"
-import { getAllJobs } from "./actions"
+import React from 'react';
+import { connect } from 'react-redux';
+import { getAllJobs } from './actions';
 
-import { Table } from "rsuite"
+import { Table, Pagination } from 'rsuite';
 
-import Loading from "../../components"
+import Loading from '../../components/Loading';
 
-const LIMIT = 10
+const LIMIT = 10;
 class JobList extends React.Component {
   state = {
     currentPage: 1,
-  }
+  };
   componentDidMount() {
-    this.loadData(0, 1)
+    this.loadData(0, 1);
   }
 
   loadData = async (offset = 0, currentPage) => {
-    Loading.showLoading()
+    Loading.showLoading();
     await this.props.getAllJobs({
       limit: LIMIT,
       offset,
-    })
+    });
     this.setState({
       currentPage,
-    })
-    Loading.hideLoading()
-  }
+    });
+    Loading.hideLoading();
+  };
 
   getPagination = async (isPrev = true) => {
     const offset = isPrev
       ? this.props.offset - this.props.jobs.length - LIMIT
-      : this.props.offset
+      : this.props.offset;
     const currentPage = isPrev
       ? this.state.currentPage - 1
-      : this.state.currentPage + 1
-    await this.loadData(offset, currentPage)
-  }
+      : this.state.currentPage + 1;
+    await this.loadData(offset, currentPage);
+  };
 
   render() {
-    const { jobs, hasMore } = this.props
-    const { currentPage } = this.state
+    const { jobs, hasMore } = this.props;
+    const { currentPage } = this.state;
     console.log({
       jobs,
-    })
+    });
     return (
       <>
-        <h3>All Jobs</h3>
+        <h3 style={{margin: '30px 0px 30px 40px'}}>All Jobs</h3>
         {/* {isSucceed && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="error">{message}</Alert>} */}
         <Table
-      height={400}
-      data={jobs.map(item => ({
-        ...item,
-        no: (currentPage - 1) * LIMIT + index + 1,
-        total: item.total || 0
-      }))}
-    >
-      <Column width={70} align="right" fixed>
-        <HeaderCell>No</HeaderCell>
-        <Cell dataKey="no" />
-      </Column>
+          height={400}
+          data={jobs.map((item, index) => ({
+            ...item,
+            no: (currentPage - 1) * LIMIT + index + 1,
+            ...item.customer,
+            ...item.jobDetail
+          }))}
+        >
+          <Table.Column width={70} align='right' fixed>
+            <Table.HeaderCell>No</Table.HeaderCell>
+            <Table.Cell dataKey='no' />
+          </Table.Column>
 
-      <Column width={120} fixed>
-        <HeaderCell>Customer name</HeaderCell>
-        <Cell dataKey="name" />
-      </Column>
+          <Table.Column width={120} fixed>
+            <Table.HeaderCell>Customer name</Table.HeaderCell>
+            <Table.Cell dataKey='name' />
+          </Table.Column>
 
-      <Column width={120}>
-        <HeaderCell>Address</HeaderCell>
-        <Cell dataKey="address" />
-      </Column>
+          <Table.Column width={300}>
+            <Table.HeaderCell>Address</Table.HeaderCell>
+            <Table.Cell dataKey='address' />
+          </Table.Column>
 
-      <Column width={120}>
-        <HeaderCell>Phone</HeaderCell>
-        <Cell dataKey="phone" />
-      </Column>
+          <Table.Column width={100}>
+            <Table.HeaderCell>Phone</Table.HeaderCell>
+            <Table.Cell dataKey='phone' />
+          </Table.Column>
 
-      <Column width={120}>
-        <HeaderCell>Prefer date</HeaderCell>
-        <Cell dataKey="preferDate" />
-      </Column>
+          <Table.Column width={120}>
+            <Table.HeaderCell>Prefer date</Table.HeaderCell>
+            <Table.Cell dataKey='preferDate' />
+          </Table.Column>
 
-      <Column width={120}>
-        <HeaderCell>Working duration</HeaderCell>
-        <Cell dataKey="workingDuration" />
-      </Column>
+          <Table.Column width={150}>
+            <Table.HeaderCell>Working duration</Table.HeaderCell>
+            <Table.Cell dataKey='durationTime' />
+          </Table.Column>
 
-      <Column width={120}>
-        <HeaderCell>Cleaning tool</HeaderCell>
-        <Cell dataKey="cleaningTool" />
-      </Column>
-      <Column width={120} fixed="right">
-        <HeaderCell>Price per hour</HeaderCell>
-        <Cell dataKey="pricePerHour" />
-        
-      </Column>
-      <Column width={120} fixed="right">
-        <HeaderCell>Note</HeaderCell>
-        <Cell dataKey="note" />
-        
-      </Column>
-      <Column width={120} fixed="right">
-        <HeaderCell>Total</HeaderCell>
+          <Table.Column width={200}>
+            <Table.HeaderCell>Cleaning tool</Table.HeaderCell>
+            <Table.Cell dataKey='cleaningTool' />
+          </Table.Column>
+          <Table.Column width={100}>
+            <Table.HeaderCell>Price per hour</Table.HeaderCell>
+            <Table.Cell dataKey='pricePerHour' />
+          </Table.Column>
+          <Table.Column width={100}>
+            <Table.HeaderCell>Note</Table.HeaderCell>
+            <Table.Cell dataKey='note' />
+          </Table.Column>
+          <Table.Column width={100}>
+            <Table.HeaderCell>Total</Table.HeaderCell>
+            <Table.Cell dataKey='total' />
+          </Table.Column>
+          <Table.Column width={100}>
+            <Table.HeaderCell>Booking time</Table.HeaderCell>
 
-        <Cell dataKey="total" />
-      </Column>
-      <Column width={120} fixed="right">
-        <HeaderCell>Booking time</HeaderCell>
-
-        <Cell dataKey="bookingTime" />
-      </Column>
-    </Table>
+            <Table.Cell dataKey='bookingTime' />
+          </Table.Column>
+        </Table>
 
         <Pagination
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginRight: "20px",
-          }}
-        >
-          {currentPage > 1 ? (
-            <Pagination.Prev onClick={this.getPagination} />
-          ) : null}
-          <Pagination.Item>{currentPage}</Pagination.Item>
-          {hasMore ? (
-            <Pagination.Next onClick={() => this.getPagination(false)} />
-          ) : null}
-        </Pagination>
+          prev={currentPage > 1}
+          next={hasMore}
+          size='sm'
+          total={100}
+          limit={LIMIT}
+          activePage={currentPage}
+          onChangePage={this.getPagination}
+        />
       </>
-    )
+    );
   }
 }
 
 const mapDispatchToProps = {
   getAllJobs,
-}
+};
 
 const mapStateToProps = (state) => {
-  const jobs = state.adminInfo.jobs.list || []
+  const jobs = state.adminInfo.jobs.list || [];
 
   console.log({
     state,
-  })
+  });
   return {
     jobs,
     hasMore: state.adminInfo.jobs.hasMore,
     offset: state.adminInfo.jobs.offset || 0,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(JobList)
+export default connect(mapStateToProps, mapDispatchToProps)(JobList);

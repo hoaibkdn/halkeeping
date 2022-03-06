@@ -8,6 +8,8 @@ import btn_background from "../../assets/images/btn-background.png";
 import { connect } from "react-redux";
 import { resetBook } from "../redux/actions";
 import { FC, useEffect } from "react";
+import Header from "rsuite/esm/Calendar/Header";
+import Footer from "../../components/Footer";
 
 const BgButton = styled.div`
   position: relative;
@@ -47,6 +49,7 @@ const Home: FC<any> = ({ resetBook }) => {
 
   return (
     <>
+      <Header />
       <Banner />
       <Slide />
       <Services />
@@ -56,6 +59,7 @@ const Home: FC<any> = ({ resetBook }) => {
         <img src={btn_background} />
       </BgButton>
       <Feedbacks />
+      <Footer />
     </>
   );
 };

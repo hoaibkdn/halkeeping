@@ -46,7 +46,6 @@ const Login = (props: Props) => {
   const history = useHistory()
   const onChangeValue = useCallback(
     (value) => {
-      console.log('on change', value)
       const newData = {}
 
       Object.keys(value).forEach(key => {
@@ -66,8 +65,9 @@ const Login = (props: Props) => {
     async (e) => {
       e.preventDefault()
       setLoading(true)
-      // const errorForm: Record<string, FormData> = validateForm(formData)
-      // if (!errorForm.email.error && !errorForm.password.error) {
+      const errorForm: Record<string, FormData> = validateForm(formData)
+      console.log('errorForm', errorForm)
+      if (!errorForm.email.error && !errorForm.password.error) {
         const response = await props.loginAction(formData)
         console.log({
           response,
@@ -83,9 +83,9 @@ const Login = (props: Props) => {
             },
           })
         }
-      // } else {
-      //   setFormData(errorForm)
-      // }
+      } else {
+        setFormData(errorForm)
+      }
       setLoading(false)
     },
     [formData, history, props]
@@ -114,7 +114,10 @@ const Login = (props: Props) => {
                     type="email"
                     placeholder="Enter email"
                     name="email"
-                    />
+                  />
+                  {formData.email.error && (
+                    <p style={{color: 'red'}}>{formData.email.error}</p>
+                  )}
                 </Form.Group>
                 <Form.Group>
                   <Form.ControlLabel>Password</Form.ControlLabel>
@@ -122,8 +125,10 @@ const Login = (props: Props) => {
                     type="password"
                     placeholder="Password"
                     name="password"
-                    // onChange={(e) => onChangeValue("password", e.target.value)}
-                    />
+                  />
+                  {formData.password.error && (
+                    <p style={{color: 'red'}}>{formData.password.error}</p>
+                  )}
                 </Form.Group>
                 <Form.Group>
                   <ButtonToolbar>

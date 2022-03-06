@@ -1,10 +1,14 @@
 // @ts-nocheck
-import React from "react"
+import React, { useState } from "react"
 import { connect } from "react-redux"
 import { Redirect, Route, Switch } from "react-router-dom"
 
 import JobList from "./JobList"
-import { Container, Sidebar, Loader } from "rsuite"
+import { Container, Sidebar, Loader, Sidenav, Dropdown, Nav, Content, Navbar } from "rsuite"
+import Header from "rsuite/esm/Calendar/Header"
+import SettingIcon from '@rsuite/icons/Setting';
+import ArrowLeftLineIcon from '@rsuite/icons/ArrowLeftLine';
+import ArrowRightLineIcon from '@rsuite/icons/ArrowRightLine';
 
 interface Props {
   adminRole: {
@@ -33,26 +37,6 @@ const iconStyles = {
   padding: 18,
   lineHeight: '56px',
   textAlign: 'center'
-};
-
-const NavToggle = ({ expand, onChange }) => {
-  return (
-    <Navbar appearance="subtle" className="nav-toggle">
-      <Navbar.Body>
-        <Nav>
-          <Nav.Item eventKey="1" active icon={<Dashboard />}>
-            Home
-          </Nav.Item>
-        </Nav>
-
-        <Nav pullRight>
-          <Nav.Item onClick={onChange} style={{ width: 56, textAlign: 'center' }}>
-            {expand ? <AngleLeft /> : <AngleRight />}
-          </Nav.Item>
-        </Nav>
-      </Navbar.Body>
-    </Navbar>
-  );
 };
 
 const data = [
@@ -89,7 +73,32 @@ const data = [
   },
 ]
 
+const NavToggle = ({ expand, onChange }) => {
+  return (
+    <Navbar appearance="subtle" className="nav-toggle">
+      <Navbar.Body>
+        <Nav>
+          <Dropdown
+            placement="topStart"
+            trigger="click"
+          >
+            <Dropdown.Item>Help</Dropdown.Item>
+            <Dropdown.Item>Settings</Dropdown.Item>
+            <Dropdown.Item>Sign out</Dropdown.Item>
+          </Dropdown>
+        </Nav>
+        <Nav pullRight>
+          <Nav.Item onClick={onChange} style={{ width: 56, textAlign: 'center' }}>
+            {expand ? <ArrowLeftLineIcon /> : <ArrowRightLineIcon/>}
+          </Nav.Item>
+        </Nav>
+      </Navbar.Body>
+    </Navbar>
+  );
+};
+
 const Dashboard = (props: Props) => {
+  const [expand, setExpand] = useState(true)
   if (!props.adminRole?.token) {
     return <Redirect to="/login" />
   }
@@ -103,8 +112,8 @@ const Dashboard = (props: Props) => {
         >
           <Sidenav.Header>
             <div style={headerStyles}>
-              <LogoAnalytics style={{ fontSize: 20 }} />
-              <span style={{ marginLeft: 12 }}> BRAND</span>
+              <SettingIcon style={{ fontSize: 20 }} />
+              <span style={{ marginLeft: 12 }}> DASHBOARD</span>
             </div>
           </Sidenav.Header>
           <Sidenav expanded={expand} defaultOpenKeys={['3']} appearance="subtle">
@@ -114,19 +123,17 @@ const Dashboard = (props: Props) => {
                   eventKey="0"
                   trigger="hover"
                   title="Home"
-                  icon={<Magic />}
                   placement="rightStart"
                 >
                   <Dropdown.Item eventKey="2">All Jobs</Dropdown.Item>
                   </Dropdown>
-                <Nav.Item eventKey="12" icon={<Group />}>
+                <Nav.Item eventKey="12">
                   Cleaners
                 </Nav.Item>
                 <Dropdown
                   eventKey="13"
                   trigger="hover"
                   title="Customers"
-                  icon={<Magic />}
                   placement="rightStart"
                 >
                   <Dropdown.Item eventKey="14">Category</Dropdown.Item>
@@ -151,7 +158,6 @@ const Dashboard = (props: Props) => {
             <Route exact path="/admin/:page" component={JobList} />
           </Switch>
           <Loader />
-
           </Content>
         </Container>
       </Container>

@@ -7,11 +7,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
 import Home from "./pages/home";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import Book from "./pages/book";
 import BookConfirm from "./pages/book/BookConfirm";
 import Login from './pages/login'
+import DashboardAdmin from "./pages/admin"
 
 class App extends Component {
   render() {
@@ -19,14 +18,13 @@ class App extends Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Router>
-            <Header />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/book" component={Book} />
               <Route exact path="/book-confirm" component={BookConfirm} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/admin/dashboard" component={DashboardAdmin} />
             </Switch>
-            <Footer />
           </Router>
         </PersistGate>
       </Provider>
