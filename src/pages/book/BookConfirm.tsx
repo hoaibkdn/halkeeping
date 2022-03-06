@@ -91,6 +91,7 @@ const BookConfirm = (props: Props) => {
       },
       unit: "vnd",
       note: data.note,
+      numberOfCleaners: data.numberOfCleaners,
     };
 
     const res = await props.createJob(uploadData);

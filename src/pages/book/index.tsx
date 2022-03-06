@@ -31,6 +31,12 @@ const Title = styled.h6`
   font-weight: 650;
 `;
 
+const Note = styled.p`
+  color: #b29700;
+  font-size: 17px;
+  margin-bottom: 20px;
+`;
+
 const Col = styled.div`
   width: 47%;
 `;
@@ -88,6 +94,25 @@ const optionsHours = [
   },
 ];
 
+const optionsCleaners = [
+  {
+    value: 1,
+    label: "1 Người",
+  },
+  {
+    value: 2,
+    label: "2 Người",
+  },
+  {
+    value: 3,
+    label: "3 Người",
+  },
+  {
+    value: 4,
+    label: "4 Người",
+  },
+];
+
 const optionsMinutes = [
   {
     value: 10,
@@ -117,6 +142,7 @@ interface State {
 
 const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
   const basicInfo = data?.basicInfo;
+
   const districts = data?.province?.districts?.map((i: any) => {
     return {
       value: i.codename,
@@ -144,11 +170,31 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
         basic: formValue?.tool?.includes("toolBasic"),
         vacuum: formValue?.tool?.includes("toolCleaner"),
       },
+      requestedTime: {
+        timeStamp: getTimeStamp(),
+        timeZone: getTimeZone(),
+      },
     });
     setWardsOptions(getWards(data?.book?.district));
-
     return () => {};
   }, []);
+
+  const workingTime = {
+    start: basicInfo?.validWorkingTime?.start,
+    end: basicInfo?.validWorkingTime?.end,
+    dailyWorkingTime: basicInfo?.validWorkingTime?.dailyWorkingTime || {
+      start: 8,
+      end: 18,
+    },
+  };
+
+  const getTimeZone = () => {
+    return -(new Date().getTimezoneOffset() / 60);
+  };
+
+  const getTimeStamp = () => {
+    return new Date().getTime();
+  };
 
   const onChangeDistricts = useCallback((val: string) => {
     const options = getWards(val);
@@ -313,17 +359,67 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
             placeholder="Vui lòng điền thông tin địa chỉ cụ thể"
             rows={5}
           />
-
+          <Note>
+            {/* Để tiết kiệm thời gian, cũng như đễ dàng cho bên mình thu xếp người
+            làm, bạn vui lòng đặt trước giúp bên mình, bắt đầu từ{" "}
+            {new Date(workingTime.start).getHours()} giờ, ngày{" "}
+            {moment(new Date(workingTime.start)).format("DD-MM-YYYY")} */}
+            Vùi lòng đặt trước ít nhất 3h để tiện sắp xếp người làm
+          </Note>
           <Row>
             <Col>
               <Field
                 label="Ngày làm*"
                 accepter={DatePicker}
                 name="date"
-                disabledDate={(date: any) =>
-                  moment(date).isBefore(moment(new Date()).subtract(1, "days"))
-                }
+                disabledDate={(date: any) => {
+                  const diff =
+                    new Date().getDate() -
+                    new Date(workingTime.start).getDate() +
+                    1;
+
+                  return moment(date).isBefore(
+                    moment(new Date()).subtract(diff, "days")
+                  );
+                }}
                 placeholder="Chọn ngày làm"
+              />
+            </Col>
+            <Col>
+              <Field
+                label="Thời gian làm*"
+                name="time"
+                format="hh:mm"
+                ranges={[]}
+                disabledHours={(hour: any) => {
+                  let start = new Date(workingTime.start).getHours();
+                  let end = workingTime.dailyWorkingTime.end;
+
+                  if (
+                    new Date(formValue.date).getDate() -
+                      new Date(workingTime.start).getDate() >
+                    0
+                  ) {
+                    start = workingTime.dailyWorkingTime.start;
+                  }
+
+                  return hour < start || hour > end;
+                }}
+                accepter={DatePicker}
+                placeholder="Chọn thời gian làm"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Field
+                label="Số người làm"
+                placeholder="Cleaners"
+                name="numberOfCleaners"
+                searchable={false}
+                onChange={(e: any) => onChange(e, "numberOfCleaners")}
+                accepter={SelectPicker}
+                data={optionsCleaners}
               />
             </Col>
             <Col style={{ display: "flex" }}>
@@ -354,17 +450,6 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
           </Row>
           <Col>
             <Field
-              label="Thời gian làm*"
-              name="time"
-              format="hh:mm"
-              ranges={[]}
-              disabledHours={(hour: any) => hour < 6 || hour > 18}
-              accepter={DatePicker}
-              placeholder="Chọn thời gian làm"
-            />
-          </Col>
-          <Col>
-            <Field
               label="Thanh toán"
               name="pay"
               accepter={SelectPicker}
@@ -383,14 +468,14 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
             >
               <Checkbox
                 value={"toolBasic"}
-              >{`Dụng cụ cơ bản - phụ phí: ${basicInfo?.cleaning_tool_fee?.basic} vnd`}</Checkbox>
+              >{`Dụng cụ cơ bản - phụ phí: ${basicInfo?.cleaningToolFee?.basic} vnd`}</Checkbox>
               <Form.HelpText style={{ margin: "-10px 0 10px 10px" }}>
                 Chổi, cây lau nhà, xô chậu, dẻ, vim, nước lau sàn, dụng cụ chùi
                 toilet,...
               </Form.HelpText>
               <Checkbox
                 value={"toolCleaner"}
-              >{`Máy hút bụi vừa(hút thảm hoặc ghế sofa, nệm) - ${basicInfo?.cleaning_tool_fee?.vacuum} vnd`}</Checkbox>
+              >{`Máy hút bụi vừa(hút thảm hoặc ghế sofa, nệm) - ${basicInfo?.cleaningToolFee?.vacuum} vnd`}</Checkbox>
             </Form.Control>
           </Form.Group>
           <Field
