@@ -5,6 +5,7 @@ import { api } from "../../utils/admin/api"
 
 export const LOGIN = createActionType("LOGIN")
 export const GET_ALL_JOBS = createActionType("GET_ALL_JOBS")
+export const GET_ALL_CLEANERS = createActionType("GET_ALL_CLEANERS")
 
 export function login(data: Record<string, any>) {
   return async function (dispatch: Dispatch) {
@@ -12,9 +13,6 @@ export function login(data: Record<string, any>) {
 
     if (response?.data?.error === 0) {
       const token = `Bearer ${response.data.token}`
-      console.log({
-        token
-      })
       dispatch({
         type: LOGIN.SUCCEED,
         data: {
@@ -41,9 +39,6 @@ export function getAllJobs({
   return async function(dispatch: Dispatch) {
     const response = await api.getAllJobs({ limit, offset })
     if (response?.data?.error === 0) {
-      console.log({
-        response
-      })
       dispatch({
         type: GET_ALL_JOBS.SUCCEED,
         data: {
@@ -56,6 +51,31 @@ export function getAllJobs({
     }
     dispatch({
       type: GET_ALL_JOBS.FAILED,
+    })
+    return { error: true, message: response.message }
+
+  }
+}
+
+export function getAllCleaners({
+  limit = 10,
+  offset = 0
+}) {
+  return async function(dispatch: Dispatch) {
+    const response = await api.getAllCleaners({ limit, offset })
+    if (response?.error === 0) {
+      dispatch({
+        type: GET_ALL_CLEANERS.SUCCEED,
+        data: {
+          cleaners: response.cleaners,
+          hasMore: response.hasMore,
+          offset: response.offset
+        },
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: GET_ALL_CLEANERS.FAILED,
     })
     return { error: true, message: response.message }
 

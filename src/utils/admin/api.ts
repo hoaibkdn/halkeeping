@@ -21,4 +21,11 @@ export namespace api {
   }) {
     return await config.fetchJson(`/api/job/all?offset=${offset}&limit=${limit}`)
   }
+
+  export async function getAllCleaners({offset, limit}: {
+    offset: number, 
+    limit: number
+  }) {
+    return await config.fetchJson(`/api/cleaner?offset=${offset}&limit=${limit}`)
+  }
 }

@@ -9,8 +9,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import Home from "./pages/home";
 import Book from "./pages/book";
 import BookConfirm from "./pages/book/BookConfirm";
-import Login from './pages/login'
-import DashboardAdmin from "./pages/admin"
+import Login from "./pages/login";
+import DashboardAdmin from "./pages/admin";
 
 class App extends Component {
   render() {
@@ -23,7 +23,7 @@ class App extends Component {
               <Route exact path="/book" component={Book} />
               <Route exact path="/book-confirm" component={BookConfirm} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/admin/dashboard" component={DashboardAdmin} />
+              <Route exact path="/admin/:page" component={DashboardAdmin} />
             </Switch>
           </Router>
         </PersistGate>
