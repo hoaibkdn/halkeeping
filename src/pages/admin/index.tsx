@@ -9,6 +9,7 @@ import Header from "rsuite/esm/Calendar/Header"
 import SettingIcon from '@rsuite/icons/Setting';
 import ArrowLeftLineIcon from '@rsuite/icons/ArrowLeftLine';
 import ArrowRightLineIcon from '@rsuite/icons/ArrowRightLine';
+import JobDetails from "./JobDetails"
 
 interface Props {
   adminRole: {
@@ -155,7 +156,8 @@ const Dashboard = (props: Props) => {
               path="/admin"
               render={() => <Redirect to={`/admin/dashboard`} />}
             />
-            <Route exact path="/admin/:page" component={JobList} />
+            <Route exact path="/admin/:page" component={JobDetails} />
+            {/* <Route exact path="/admin/job/:id" component={JobDetails} /> */}
           </Switch>
           <Loader />
           </Content>

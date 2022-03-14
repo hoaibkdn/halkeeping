@@ -86,18 +86,7 @@ const ToggleIcon = styled.div`
   }
 `
 
-interface HeaderProps {
-  nav: Array<Link>
-  title?: string
-  active: string
-  data: any
-}
-
-// interface State {
-//   publicPages: PublicReducer
-// }
-
-const Header: FC<HeaderProps> = ({ active, data = {} }) => {
+const Header = () => {
   const [isOpened, setIsOpened] = useState(false)
   const nav = [{name: "Về chúng tôi", url: '/about-us'}, {name: "Liên hệ", url: "/contact"}]
 
@@ -119,10 +108,9 @@ const Header: FC<HeaderProps> = ({ active, data = {} }) => {
           </ToggleIcon>
           <Navigation
             nav={nav}
-            active={active}
-            header={data}
+            active='home'
             isOpened={isOpened}
-          />          
+          />
         </div>
       </HeaderWrapper>
     </>

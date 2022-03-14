@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { Carousel } from "rsuite";
 import review1 from "../../assets/images/review_1.png";
+import review2 from "../../assets/images/review_2.png";
+import review3 from "../../assets/images/review_3.png";
+import review4 from "../../assets/images/review_4.png";
 const Section = styled.section`
   & > div {
     max-width: 70%;
@@ -17,6 +20,12 @@ const Section = styled.section`
     & > div {
       display: flex;
       justify-content: space-between;
+    }
+
+    & img {
+      object-fit: contain;
+      width: 716px;
+      height: auto;
     }
 
     & > .slide {
@@ -50,7 +59,13 @@ const Feedbacks = () => {
             <img className="d-block w-100" src={review1} alt="First slide" />
           </div>
           <div>
-            <img className="d-block w-100" src={review1} alt="First slide" />
+            <img className="d-block w-100" src={review2} alt="First slide" />
+          </div>
+          <div>
+            <img className="d-block w-100" src={review3} alt="First slide" />
+          </div>
+          <div>
+            <img className="d-block w-100" src={review4} alt="First slide" />
           </div>
         </Carousel>
       </div>

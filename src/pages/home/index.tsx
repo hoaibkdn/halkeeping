@@ -8,7 +8,7 @@ import btn_background from "../../assets/images/btn-background.png";
 import { connect } from "react-redux";
 import { resetBook } from "../redux/actions";
 import { FC, useEffect } from "react";
-import Header from "rsuite/esm/Calendar/Header";
+import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
 const BgButton = styled.div`

@@ -18,6 +18,8 @@ import {
 } from "rsuite";
 import { asyncCheckPhone } from "../../components/Form/form";
 import moment from "moment";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 const Container = styled.div`
   width: 60%;
@@ -312,6 +314,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
 
   return (
     <>
+      <Header />
       <Container>
         <Title>Đặt dịch vụ theo giờ</Title>
         <Form
@@ -532,6 +535,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Footer />
     </>
   );
 };
