@@ -6,6 +6,7 @@ import { api } from "../../utils/admin/api"
 export const LOGIN = createActionType("LOGIN")
 export const GET_ALL_JOBS = createActionType("GET_ALL_JOBS")
 export const GET_ALL_CLEANERS = createActionType("GET_ALL_CLEANERS")
+export const GET_JOB_DETAILS = createActionType("GET_JOB_DETAILS")
 
 export function login(data: Record<string, any>) {
   return async function (dispatch: Dispatch) {
@@ -76,6 +77,26 @@ export function getAllCleaners({
     }
     dispatch({
       type: GET_ALL_CLEANERS.FAILED,
+    })
+    return { error: true, message: response.message }
+
+  }
+}
+
+export function getJobDetails({
+  id
+}) {
+  return async function(dispatch: Dispatch) {
+    const response = await api.getJobDetails(id)
+    if (response?.error === 0) {
+      dispatch({
+        type: GET_JOB_DETAILS.SUCCEED,
+        data: response,
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: GET_JOB_DETAILS.FAILED,
     })
     return { error: true, message: response.message }
 

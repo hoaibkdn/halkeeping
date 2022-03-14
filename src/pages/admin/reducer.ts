@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { LOGIN, GET_ALL_JOBS, GET_ALL_CLEANERS } from "./actions";
+import { LOGIN, GET_ALL_JOBS, GET_ALL_CLEANERS, GET_JOB_DETAILS } from "./actions";
 import getJobsList from "./transforms";
 
 export interface AdminReducer {
@@ -50,6 +50,14 @@ function adminReducer(state: AdminReducer = initState, action: any) {
           offset: action.data.offset,
         }
       };
+
+      case GET_JOB_DETAILS.SUCCEED:
+        return {
+          ...state,
+          currentJob: {
+            list: action.data
+          }
+        };
     default:
       return state;
   }

@@ -24,6 +24,7 @@ class App extends Component {
               <Route exact path="/book-confirm" component={BookConfirm} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/admin/:page" component={DashboardAdmin} />
+              <Route exact path="/admin/job/:id" component={DashboardAdmin} />
             </Switch>
           </Router>
         </PersistGate>

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getAllJobs } from './actions';
-
+import { useHistory } from "react-router-dom"
 import { Table, Pagination } from 'rsuite';
 
 import Loading from '../../components/Loading';
@@ -57,6 +57,9 @@ class JobList extends React.Component {
             ...item.customer,
             ...item.jobDetail
           }))}
+          onRowClick={data => {
+            this.props.history.push(`/admin/job/${data.customer._id}`)
+          }}
         >
           <Table.Column width={70} align='right' fixed>
             <Table.HeaderCell>No</Table.HeaderCell>
@@ -114,8 +117,8 @@ class JobList extends React.Component {
         <Pagination
           prev={currentPage > 1}
           next={hasMore}
-          size='sm'
-          total={100}
+          size="sm"
+          total={hasMore ? currentPage + 1 : currentPage}
           limit={LIMIT}
           activePage={currentPage}
           onChangePage={this.getPagination}

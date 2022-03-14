@@ -1,9 +1,8 @@
 // @ts-nocheck
-import React, { FC, useState, useEffect, useCallback, useRef } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Field from '../../components/Form/Field';
 import { Label, Textarea } from '../../components/Form/style';
-import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PublicReducer } from '../redux/reducer';
 import {
@@ -19,6 +18,7 @@ import {
 import moment from 'moment';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { getJobDetails } from './actions';
 
 const Container = styled.div`
   width: 60%;
@@ -142,6 +142,8 @@ interface State {
 }
 
 const JobDetails: FC<any> = ({
+  currentJob,
+  getJobDetails,
   jobs
 }) => {
 
@@ -238,17 +240,29 @@ const JobDetails: FC<any> = ({
   //   }
   // };
 
+  const id = window.location.pathname.split('/'). pop()
+
+  useEffect(() => {
+    const id = window.location.pathname
+
+    getJobDetails(id)
+  }, [])
+
+  console.log('window.location.pathname', window.location.pathname)
+  const job = jobs.find(item => id === item.customer._id)
   const details = {
-    ...jobs[0]?.customer,
-    ...jobs[0].jobDetail
+    ...job?.customer,
+    ...job.jobDetail
   }
+
+  console.log(details)
 
   const [formValue, setFormValue] = React.useState({
     name: details.name,
     phone: details.phone,
     email: details.email,
-    address: details.address.replace('\n        ', ''),
-    preferDate: new Date(details.preferDate),
+    address: details.address.replace('\n', ''),
+    preferDate: new Date(details.preferDate.split(' ')[0]),
     cleaningTool: details.cleaningTool,
     basicTool: details.cleaningTool === "Basic tool",
     vacuum: details.cleaningTool.includes('vacuum'),
@@ -392,9 +406,9 @@ const JobDetails: FC<any> = ({
   );
 };
 
-// const mapDispatchToProps = {
-//   jobs,
-// };
+const mapDispatchToProps = {
+  getJobDetails,
+};
 
 const mapStateToProps = (state) => {
   const jobs = state.adminInfo.jobs.list || [];
@@ -404,4 +418,4 @@ const mapStateToProps = (state) => {
 };
 
 
-export default connect(mapStateToProps, null)(JobDetails as any);
+export default connect(mapStateToProps, mapDispatchToProps)(JobDetails as any);

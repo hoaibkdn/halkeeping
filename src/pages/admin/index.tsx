@@ -173,8 +173,8 @@ const Dashboard = (props: Props) => {
                 path="/admin"
                 render={() => <Redirect to={`/admin/dashboard`} />}
               />
+              <Route exact path='/admin/job/:id' component={JobDetails} />
               <Route exact path="/admin/dashboard" component={JobList} />
-              <Route exact path="/admin/job/" component={JobDetails} />
               <Route exact path="/admin/cleaners" component={CleanerList} />
             </Switch>
             {/* <Loader /> */}

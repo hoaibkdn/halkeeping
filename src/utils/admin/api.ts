@@ -28,4 +28,8 @@ export namespace api {
   }) {
     return await config.fetchJson(`/api/cleaner?offset=${offset}&limit=${limit}`)
   }
+
+  export async function getJobDetails(id: number) {
+    return await config.fetchJson(`/api/job?id=${id}`)
+  }
 }
