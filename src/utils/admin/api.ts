@@ -32,4 +32,7 @@ export namespace api {
   export async function getJobDetails(id: number) {
     return await config.fetchJson(`/api/job?id=${id}`)
   }
+  export async function getPaymentMethods(id: number) {
+    return await config.fetchJson(`/api/job?id=${id}`)
+  }
 }

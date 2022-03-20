@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { Link, Redirect, Route, Switch } from "react-router-dom";
 
 import JobList from "./JobList";
-import JobDetails from "./JobDetails"
-
+import JobDetails from "./JobDetails";
 import CleanerList from "./Cleaner/CleanerList";
+import PaymentMethod from "./PaymentMethod";
 import {
   Container,
   Sidebar,
@@ -148,6 +148,9 @@ const Dashboard = (props: Props) => {
                 <Nav.Item eventKey="12">
                   <Link to="/admin/cleaners">Cleaners</Link>
                 </Nav.Item>
+                <Nav.Item eventKey="13">
+                  <Link to="/admin/payment">Payment</Link>
+                </Nav.Item>
                 <Dropdown
                   eventKey="13"
                   trigger="hover"
@@ -173,9 +176,10 @@ const Dashboard = (props: Props) => {
                 path="/admin"
                 render={() => <Redirect to={`/admin/dashboard`} />}
               />
-              <Route exact path='/admin/job/:id' component={JobDetails} />
+              <Route exact path="/admin/job/:id" component={JobDetails} />
               <Route exact path="/admin/dashboard" component={JobList} />
               <Route exact path="/admin/cleaners" component={CleanerList} />
+              <Route exact path="/admin/payment" component={PaymentMethod} />
             </Switch>
             {/* <Loader /> */}
           </Content>

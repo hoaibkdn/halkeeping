@@ -102,3 +102,25 @@ export function getJobDetails({
 
   }
 }
+
+export function getAllPaymentMethod() {
+  return async function(dispatch: Dispatch) {
+    const response = await api.getAllCleaners({ limit, offset })
+    if (response?.error === 0) {
+      dispatch({
+        type: GET_ALL_CLEANERS.SUCCEED,
+        data: {
+          cleaners: response.cleaners,
+          hasMore: response.hasMore,
+          offset: response.offset
+        },
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: GET_ALL_CLEANERS.FAILED,
+    })
+    return { error: true, message: response.message }
+
+  }
+}
