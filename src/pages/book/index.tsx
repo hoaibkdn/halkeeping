@@ -375,6 +375,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
                 label="Ngày làm*"
                 accepter={DatePicker}
                 name="date"
+                format="dd-MM-yyyy"
                 disabledDate={(date: any) => {
                   const diff =
                     new Date().getDate() -
@@ -420,8 +421,8 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
                 placeholder="Cleaners"
                 name="numberOfCleaners"
                 searchable={false}
-                onChange={(e: any) => onChange(e, "numberOfCleaners")}
                 accepter={SelectPicker}
+                defaultValue={1}
                 data={optionsCleaners}
               />
             </Col>
