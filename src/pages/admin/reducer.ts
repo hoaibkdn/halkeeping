@@ -67,14 +67,6 @@ function adminReducer(state: AdminReducer = initState, action: any) {
         },
       };
 
-    case GET_JOB_DETAILS.SUCCEED:
-      return {
-        ...state,
-        currentJob: {
-          list: action.data,
-        },
-      };
-
     case GET_PAYMENT_METHODS.SUCCEED:
       return {
         ...state,
@@ -99,6 +91,7 @@ function adminReducer(state: AdminReducer = initState, action: any) {
           },
         },
       };
+
     case GET_JOB_DETAILS.SUCCEED:
       return {
         ...state,

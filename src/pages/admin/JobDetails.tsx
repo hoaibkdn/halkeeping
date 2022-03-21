@@ -153,7 +153,7 @@ const JobDetails: FC<any> = ({
   const [cleanerData, setCleanerData] = useState([] as any);
   const [signedCleaners, setSignedCleaners] = useState([]);
   const [errors, setErrors] = useState('')
-  const id = window.location.pathname.split('/'). pop()
+  const id = window.location.pathname.split('/').pop()
 
   useEffect(() => {
     getJobDetails(id)
@@ -165,11 +165,12 @@ const JobDetails: FC<any> = ({
   }, [])
 
   useEffect(() => {
-    if(job) {
+    if (job) {
       const details = {
         ...job?.customer[0],
         ...job,
       }
+
       setFormValue({
         name: details.name,
         phone: details.phone,
@@ -190,14 +191,14 @@ const JobDetails: FC<any> = ({
       setSignedCleaners(details.cleaner)
     }
 
-    if(cleaners) {
-      setCleanerData(cleaners.map(item => ({label: `${item.name} - ${item.phone}`, value: item._id})))
+    if (cleaners) {
+      setCleanerData(cleaners.map(item => ({ label: `${item.name} - ${item.phone}`, value: item._id })))
     }
-    
+
   }, [job])
 
-  const handleSubmit = async() => {
-    if(formValue.numberOfCleaners !== signedCleaners.length) {
+  const handleSubmit = async () => {
+    if (formValue.numberOfCleaners !== signedCleaners.length) {
       setErrors(`Vui lòng chọn ${formValue.numberOfCleaners} người dọn`)
 
       return
@@ -224,127 +225,127 @@ const JobDetails: FC<any> = ({
 
     const res = await editJob(id, uploadData)
 
-    console.log('res', res)
+    if(!res.error) {
+      setErrors('Assigned successfully')
+    }
   }
-
-  console.log('formValue', formValue)
 
   return (
     <> <Container>
       <Title>Đặt dịch vụ theo giờ</Title>
-      <Row style={{alignItems: 'baseline'}}>
-        
-        <Col>
-        <Form
-        // ref={formRef as any}
-        // model={model}
-        onChange={() => {}}
-        formValue={formValue}
-      >
-        <Field
-          label='Tên khách hàng'
-          name='name'
-          placeholder='Vui lòng điền tên người đặt dịch vụ'
-        />
-        <Field
-          label='Số điện thoại *'
-          name='phone'
-          placeholder='Nhập số điện thoại'
-        />
-        <Field
-          label='Email *'
-          name='email'
-          placeholder='Email để xác nhận đơn dọn vệ sinh'
-        />
-        <Field
-          label='Địa chỉ'
-          name='address'
-          // onChange={(e: any) => onChangeDistricts(e)}
-        />
-        <Field
-          label="Ngày làm*"
-          accepter={DatePicker}
-          name='preferDate'
-          placeholder="Chọn ngày làm"
-        />
-        <Field
-          label='Giờ làm'
-          name='durationTime'
-          // onChange={(e: any) => onChangeDistricts(e)}
-        />
-        <Field
-          label='Số tiền 1 giờ'
-          name='pricePerHour'
-          // onChange={(e: any) => onChangeDistricts(e)}
-        />
-        
-        <Form.Group controlId={`tool-3`}>
-          <Form.Control
-            name="tool"
-            accepter={CheckboxGroup}
-            // onChange={(e: any) => onChange(e, "tool")}
-          >
-            <Checkbox
-              checked={formValue.basicTool}
-            >{`Dụng cụ cơ bản - phụ phí: ${formValue?.cleaningToolFee?.basic} vnd`}</Checkbox>
-            <Form.HelpText style={{ margin: "-10px 0 10px 10px" }}>
-              Chổi, cây lau nhà, xô chậu, dẻ, vim, nước lau sàn, dụng cụ chùi
-              toilet,...
-            </Form.HelpText>
-            <Checkbox
-              checked={formValue.vacuum}
-            >{`Máy hút bụi vừa(hút thảm hoặc ghế sofa, nệm) - ${formValue?.cleaningToolFee?.vacuum} vnd`}</Checkbox>
-          </Form.Control>
-        </Form.Group>
-        <Field
-          label="Dặn dò thêm"
-          rows={5}
-          name="note"
-          accepter={Textarea}
-          placeholder="Bạn có thể ghi chú thêm những việc bạn muốn nhân viên dọn vệ sinh chú ý khi làm"
-        />
-        <Row>
-          <div>
-            <span>Tổng</span>:{" "}
-            <span style={{ color: "#01527C", fontSize: "30px" }}>
-              {formValue.total} đồng
-            </span>
-          </div>
+      <Row style={{ alignItems: 'baseline' }}>
 
-          <Button
-            type="submit"
-            style={{
-              borderColor: "#042C41",
-              backgroundColor: "#042C41",
-              width: "150px",
-              height: "60px",
-              color: "#fff",
-            }}
-            onClick={handleSubmit}
+        <Col>
+          <Form
+            // ref={formRef as any}
+            // model={model}
+            onChange={() => { }}
+            formValue={formValue}
           >
-            Xác Nhận
+            <Field
+              label='Tên khách hàng'
+              name='name'
+              placeholder='Vui lòng điền tên người đặt dịch vụ'
+            />
+            <Field
+              label='Số điện thoại *'
+              name='phone'
+              placeholder='Nhập số điện thoại'
+            />
+            <Field
+              label='Email *'
+              name='email'
+              placeholder='Email để xác nhận đơn dọn vệ sinh'
+            />
+            <Field
+              label='Địa chỉ'
+              name='address'
+            // onChange={(e: any) => onChangeDistricts(e)}
+            />
+            <Field
+              label="Ngày làm*"
+              accepter={DatePicker}
+              name='preferDate'
+              placeholder="Chọn ngày làm"
+            />
+            <Field
+              label='Giờ làm'
+              name='durationTime'
+            // onChange={(e: any) => onChangeDistricts(e)}
+            />
+            <Field
+              label='Số tiền 1 giờ'
+              name='pricePerHour'
+            // onChange={(e: any) => onChangeDistricts(e)}
+            />
+
+            <Form.Group controlId={`tool-3`}>
+              <Form.Control
+                name="tool"
+                accepter={CheckboxGroup}
+              // onChange={(e: any) => onChange(e, "tool")}
+              >
+                <Checkbox
+                  checked={formValue.basicTool}
+                >{`Dụng cụ cơ bản - phụ phí: ${formValue?.cleaningToolFee?.basic} vnd`}</Checkbox>
+                <Form.HelpText style={{ margin: "-10px 0 10px 10px" }}>
+                  Chổi, cây lau nhà, xô chậu, dẻ, vim, nước lau sàn, dụng cụ chùi
+                  toilet,...
+            </Form.HelpText>
+                <Checkbox
+                  checked={formValue.vacuum}
+                >{`Máy hút bụi vừa(hút thảm hoặc ghế sofa, nệm) - ${formValue?.cleaningToolFee?.vacuum} vnd`}</Checkbox>
+              </Form.Control>
+            </Form.Group>
+            <Field
+              label="Dặn dò thêm"
+              rows={5}
+              name="note"
+              accepter={Textarea}
+              placeholder="Bạn có thể ghi chú thêm những việc bạn muốn nhân viên dọn vệ sinh chú ý khi làm"
+            />
+            <Row>
+              <div>
+                <span>Tổng</span>:{" "}
+                <span style={{ color: "#01527C", fontSize: "30px" }}>
+                  {formValue.total} đồng
+            </span>
+              </div>
+
+              <Button
+                type="submit"
+                style={{
+                  borderColor: "#042C41",
+                  backgroundColor: "#042C41",
+                  width: "150px",
+                  height: "60px",
+                  color: "#fff",
+                }}
+                onClick={handleSubmit}
+              >
+                Xác Nhận
           </Button>
-        </Row>
-      </Form>
+            </Row>
+          </Form>
         </Col>
-        <Col style={{display: 'flex', alignItems: 'center'}}>
-        {/* <span>Chọn {formValue.numberOfCleaners || 1} người dọn:</span> */}
-        <CheckPicker placeholder={`Chọn ${formValue.numberOfCleaners || 1} người dọn:`} data={cleanerData} style={{ width: 224, marginTop: '30px' }} value={signedCleaners} onChange={setSignedCleaners}/>
+        <Col style={{ display: 'flex', alignItems: 'center' }}>
+          {/* <span>Chọn {formValue.numberOfCleaners || 1} người dọn:</span> */}
+          <CheckPicker placeholder={`Chọn ${formValue.numberOfCleaners || 1} người dọn:`} data={cleanerData} style={{ width: 224, marginTop: '30px' }} value={signedCleaners} onChange={setSignedCleaners} />
         </Col>
       </Row>
-        <Modal size="sm" open={!!errors} onClose={() => setErrors('')}>
-          <div style={{display: 'flex', justifyContent: 'center', textAlign: 'center', flexDirection: 'column'}}>
-          <Modal.Title style={{height: "100px"}}>{errors}</Modal.Title>
-        <Modal.Footer style={{width: '100%', textAlign: 'center',}}>
-          <Button onClick={() => setErrors('')} appearance="primary" style={{width: '150px'}}>
-            Ok
+      <Modal size="sm" open={!!errors} onClose={() => setErrors('')}>
+        <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center', flexDirection: 'column' }}>
+          <Modal.Title style={{ height: "100px" }}>{errors}</Modal.Title>
+          <Modal.Footer style={{ width: '100%', textAlign: 'center', }}>
+            <Button onClick={() => setErrors('')} appearance="primary" style={{ width: '150px' }}>
+              Ok
           </Button>
           </Modal.Footer>
-          </div>
+        </div>
       </Modal>
-      
+
     </Container>
-      
+
     </>
   );
 };
@@ -358,7 +359,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => {
   const job = state.adminInfo.jobDetail
   const cleaners = state.adminInfo?.cleaners?.list || [];
-  // const editJobState = state.adminInfo?.editJobState
+
   return {
     job,
     cleaners,
