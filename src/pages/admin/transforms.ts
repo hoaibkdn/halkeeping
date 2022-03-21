@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+// @ts-nocheck
 const getJobsList = (jobs: any) => {
   return jobs.map((item: any) => {
     const customer = item.customer[0] || {};
@@ -24,4 +26,28 @@ const getJobsList = (jobs: any) => {
   });
 };
 
+
+function transformPaymentMethods(allPaymentMethods: Array<{}>) {
+  console.log({
+      allPaymentMethods
+  })
+  const response = {
+      listIds: [],
+      paymentDetail: {}
+  }
+  if (!allPaymentMethods) {
+    return response
+  }
+  allPaymentMethods.reduce((total: {
+      listIds: Array<string>,
+      paymentDetail: Object
+  }, method) => {
+      total.listIds.push(method._id),
+      total.paymentDetail[method._id] = method
+      return total
+  }, response)
+  return response
+}
+
+export { transformPaymentMethods }
 export default getJobsList;
