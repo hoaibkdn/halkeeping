@@ -9,6 +9,7 @@ const getJobsList = (jobs: any) => {
     let cleaningTool = item.cleaningTool?.basic ? `Basic tool` : '';
     cleaningTool += item.cleaningTool?.vacuum ? ' + Vacuum' : '';
     return {
+      jobId: item._id,
       customer,
       jobDetail: {
         preferDate:

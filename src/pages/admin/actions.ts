@@ -9,6 +9,7 @@ export const GET_ALL_CLEANERS = createActionType("GET_ALL_CLEANERS");
 export const GET_JOB_DETAILS = createActionType("GET_JOB_DETAILS");
 export const GET_PAYMENT_METHODS = createActionType("GET_PAYMENT_METHODS");
 export const ADD_EDIT_PAYMENT_METHOD = createActionType("ADD_EDIT_PAYMENT_METHOD");
+export const EDIT_JOB = createActionType("EDIT_JOB")
 
 export function login(data: Record<string, any>) {
   return async function (dispatch: Dispatch) {
@@ -76,15 +77,15 @@ export function getAllCleaners({ limit = 10, offset = 0 }) {
   };
 }
 
-export function getJobDetails({ id }) {
-  return async function (dispatch: Dispatch) {
-    const response = await api.getJobDetails(id);
-    if (response?.error === 0) {
+export function getJobDetails(id) {
+  return async function(dispatch: Dispatch) {
+    const response = await api.getJobDetails(id)
+    if (response?.data?.error === 0) {
       dispatch({
         type: GET_JOB_DETAILS.SUCCEED,
-        data: response,
-      });
-      return { error: false };
+        data: response?.data?.job,
+      })
+      return { error: false }
     }
     dispatch({
       type: GET_JOB_DETAILS.FAILED,
@@ -120,5 +121,21 @@ export function editPaymentMethod(method) {
         method
       })
     }
+  }
+}
+
+export function editJob(id, data) {
+  return async function(dispatch: Dispatch) {
+    const response = await api.editJob(id, data)
+    if (response?.data?.error === 0) {
+      dispatch({
+        type: EDIT_JOB.SUCCEED,
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: EDIT_JOB.FAILED,
+    })
+    return { error: true, message: response.message }
   }
 }

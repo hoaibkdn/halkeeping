@@ -41,9 +41,7 @@ class JobList extends React.Component {
   render() {
     const { jobs, hasMore } = this.props;
     const { currentPage } = this.state;
-    console.log({
-      jobs,
-    });
+
     return (
       <>
         <h3 style={{margin: '30px 0px 30px 40px'}}>All Jobs</h3>
@@ -58,7 +56,7 @@ class JobList extends React.Component {
             ...item.jobDetail
           }))}
           onRowClick={data => {
-            this.props.history.push(`/admin/job/${data.customer._id}`)
+            this.props.history.push(`/admin/job/${data.jobId}`)
           }}
         >
           <Table.Column width={70} align='right' fixed>
