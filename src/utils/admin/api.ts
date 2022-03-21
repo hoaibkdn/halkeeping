@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { configCRUD } from "../apiConfig/api-config-crud"
-import { FormData } from "@hal-group/ui"
+import { configCRUD } from "../apiConfig/api-config-crud";
+import { FormData } from "@hal-group/ui";
 
-const config = configCRUD()
+const config = configCRUD();
 
 export namespace api {
   export async function login(data: Record<string, FormData>) {
@@ -12,27 +12,43 @@ export namespace api {
         email: data.email.value,
         password: data.password.value,
       },
-    })
+    });
   }
 
-  export async function getAllJobs({offset, limit}: {
-    offset: number, 
-    limit: number
+  export async function getAllJobs({
+    offset,
+    limit,
+  }: {
+    offset: number;
+    limit: number;
   }) {
-    return await config.fetchJson(`/api/job/all?offset=${offset}&limit=${limit}`)
+    return await config.fetchJson(
+      `/api/job/all?offset=${offset}&limit=${limit}`
+    );
   }
 
-  export async function getAllCleaners({offset, limit}: {
-    offset: number, 
-    limit: number
+  export async function getAllCleaners({
+    offset,
+    limit,
+  }: {
+    offset: number;
+    limit: number;
   }) {
-    return await config.fetchJson(`/api/cleaner?offset=${offset}&limit=${limit}`)
+    return await config.fetchJson(
+      `/api/cleaner?offset=${offset}&limit=${limit}`
+    );
   }
 
   export async function getJobDetails(id: number) {
-    return await config.fetchJson(`/api/job?id=${id}`)
+    return await config.fetchJson(`/api/job?id=${id}`);
   }
-  export async function getPaymentMethods(id: number) {
-    return await config.fetchJson(`/api/job?id=${id}`)
+  export async function getPaymentMethods() {
+    return await config.fetchJson(`/api/paymentmethods`);
+  }
+  export async function addOrEditPaymentMethod(method) {
+    return await config.jsonPost({
+      url: `/api/paymentmethods/add`,
+      data: method,
+    });
   }
 }

@@ -60,7 +60,6 @@ export function getProvinces() {
       type: GET_PROVINCES.REQUESTED,
     })
     const response = await api.getProvinces()
-
     const province = response?.province
 
     if (response) {
