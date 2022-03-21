@@ -6,6 +6,7 @@ import {
   GET_JOB_DETAILS,
   GET_PAYMENT_METHODS,
   ADD_EDIT_PAYMENT_METHOD,
+  EDIT_JOB
 } from "./actions";
 import getJobsList, { transformPaymentMethods } from "./transforms";
 
@@ -97,6 +98,17 @@ function adminReducer(state: AdminReducer = initState, action: any) {
             [edittingId]: { ...action.method, updatedAt: String(new Date()) },
           },
         },
+      };
+    case GET_JOB_DETAILS.SUCCEED:
+      return {
+        ...state,
+        jobDetail: action.data
+      };
+
+    case EDIT_JOB.SUCCEED:
+      return {
+        ...state,
+        editJobState: 'success'
       };
     default:
       return state;

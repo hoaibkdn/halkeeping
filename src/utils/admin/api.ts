@@ -40,11 +40,17 @@ export namespace api {
   }
 
   export async function getJobDetails(id: number) {
-    return await config.fetchJson(`/api/job?id=${id}`);
+    return await config.fetchJson(`/api/job/detail/${id}`)
   }
+
+  export async function editJob(id: number, data) {
+    return await config.formPost(`/api/job/edit/${id}`, data, 'POST')
+  }
+
   export async function getPaymentMethods() {
     return await config.fetchJson(`/api/paymentmethods`);
   }
+  
   export async function addOrEditPaymentMethod(method) {
     return await config.jsonPost({
       url: `/api/paymentmethods/add`,

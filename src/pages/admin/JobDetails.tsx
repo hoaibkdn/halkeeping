@@ -14,14 +14,15 @@ import {
   Checkbox,
   CheckboxGroup,
   Modal,
+  CheckPicker,
 } from "rsuite";
 import moment from 'moment';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { getJobDetails } from './actions';
+import { getJobDetails, getAllCleaners, editJob } from './actions';
 
 const Container = styled.div`
-  width: 60%;
+  width: 100%;
   margin: 110px auto;
 `;
 
@@ -142,278 +143,225 @@ interface State {
 }
 
 const JobDetails: FC<any> = ({
-  currentJob,
+  job,
   getJobDetails,
-  jobs
+  cleaners,
+  getAllCleaners,
+  editJob
 }) => {
-
-
-
-  // const [isSuccess, setIsSuccess] = useState(false);
-  // const handleClose = () => setIsSuccess(false);
-
-  // useEffect(() => {
-  //   getProvinces();
-  //   getBasicInfo({
-  //     durationTime: getDurationTime(),
-  //     cleaningTool: {
-  //       basic: formValue?.tool?.includes('toolBasic'),
-  //       vacuum: formValue?.tool?.includes('toolCleaner'),
-  //     },
-  //     requestedTime: {
-  //       timeStamp: getTimeStamp(),
-  //       timeZone: getTimeZone(),
-  //     },
-  //   });
-  //   return () => {};
-  // }, []);
-
-  // const workingTime = {
-  //   start: basicInfo?.validWorkingTime?.start,
-  //   end: basicInfo?.validWorkingTime?.end,
-  //   dailyWorkingTime: basicInfo?.validWorkingTime?.dailyWorkingTime || {
-  //     start: 8,
-  //     end: 18,
-  //   },
-  // };
-
-  // const getTimeZone = () => {
-  //   return -(new Date().getTimezoneOffset() / 60);
-  // };
-
-  // const getTimeStamp = () => {
-  //   return new Date().getTime();
-  // };
-
-  // const getDurationTime = () =>
-  //   Number(formValue?.hour || 0) * 60 + Number(formValue?.minutes || 0);
-
-  // const history = useHistory();
-  // const onSubmit = () => {
-  //   const data = {
-  //     ...formValue,
-  //     address: `${formValue.numberHouse},
-  //     ${
-  //       getWards(formValue.district).filter(
-  //         (i: any) => i.value === formValue.ward
-  //       )[0]?.label
-  //     },
-  //     ${
-  //       districts?.filter((i: any) => i.value === formValue.district)[0]?.label
-  //     }`,
-  //     durationTime: `${formValue.hour} tiếng ${formValue.minutes || 0} phút`,
-  //     payMethod: formValue.pay || "Tiền mặt",
-  //     countPay: basicInfo?.total | 0,
-  //   };
-
-  //   book(data);
-
-  //   history.push(`/book-confirm`);
-  // };
-
-  // const onChange = (value: any, type: string) => {
-  //   const durationTime =
-  //     type === 'hour'
-  //       ? Number(value || 0) * 60 + Number(formValue?.minutes || 0)
-  //       : type === 'minutes'
-  //       ? Number(formValue?.hour || 0) * 60 + Number(value || 0)
-  //       : Number(value || 0) * 60 + Number(formValue?.minutes || 0);
-
-  //   if (type === 'hour' || type === 'minutes') {
-  //     getBasicInfo({
-  //       durationTime,
-  //       cleaningTool: {
-  //         basic: formValue?.tool?.includes('toolBasic'),
-  //         vacuum: formValue?.tool?.includes('toolCleaner'),
-  //       },
-  //     });
-  //   }
-
-  //   if (type === 'tool') {
-  //     getBasicInfo({
-  //       durationTime: getDurationTime(),
-  //       cleaningTool: {
-  //         basic: !!value?.filter((i: any) => i === 'toolBasic').length,
-  //         vacuum: !!value?.filter((i: any) => i === 'toolCleaner').length,
-  //       },
-  //     });
-  //   }
-  // };
-
+  const [formValue, setFormValue] = useState({} as any);
+  const [cleanerData, setCleanerData] = useState([] as any);
+  const [signedCleaners, setSignedCleaners] = useState([]);
+  const [errors, setErrors] = useState('')
   const id = window.location.pathname.split('/'). pop()
 
   useEffect(() => {
-    const id = window.location.pathname
-
     getJobDetails(id)
+
+    getAllCleaners({
+      limit: 10,
+      offset: 0,
+    });
   }, [])
 
-  console.log('window.location.pathname', window.location.pathname)
-  const job = jobs.find(item => id === item.customer._id)
-  const details = {
-    ...job?.customer,
-    ...job.jobDetail
+  useEffect(() => {
+    if(job) {
+      const details = {
+        ...job?.customer[0],
+        ...job,
+      }
+      setFormValue({
+        name: details.name,
+        phone: details.phone,
+        email: details.email,
+        address: details.address?.replace('\n', ''),
+        preferDate: new Date(details.preferDate?.split(' ')[0]),
+        cleaningTool: details.cleaningTool,
+        basicTool: details?.cleaningTool?.basic,
+        vacuum: details?.cleaningTool?.vacuum,
+        cleaningToolFee: JSON.parse(details.cleaningToolFee),
+        durationTime: details.durationTime,
+        pricePerHour: details.pricePerHour,
+        total: details.total,
+        note: details?.note,
+        numberOfCleaners: details?.numberOfCleaners || 1,
+      })
+
+      setSignedCleaners(details.cleaner)
+    }
+
+    if(cleaners) {
+      setCleanerData(cleaners.map(item => ({label: `${item.name} - ${item.phone}`, value: item._id})))
+    }
+    
+  }, [job])
+
+  const handleSubmit = async() => {
+    if(formValue.numberOfCleaners !== signedCleaners.length) {
+      setErrors(`Vui lòng chọn ${formValue.numberOfCleaners} người dọn`)
+
+      return
+    }
+
+    const uploadData = {
+      phone: formValue.phone,
+      name: formValue.name,
+      address: formValue.address,
+      email: formValue.email,
+      preferDate: formValue.preferDate,
+      // time: time,
+      durationTime: formValue.durationTime,
+      cleaningTool: {
+        basic: formValue.basicTool,
+        vacuum: formValue.vacuum,
+      },
+      unit: "vnd",
+      note: formValue.note || '',
+      numberOfCleaners: formValue.numberOfCleaners,
+      pricePerHour: formValue.pricePerHour,
+      cleanerId: signedCleaners
+    };
+
+    const res = await editJob(id, uploadData)
+
+    console.log('res', res)
   }
 
-  console.log(details)
-
-  const [formValue, setFormValue] = React.useState({
-    name: details.name,
-    phone: details.phone,
-    email: details.email,
-    address: details.address.replace('\n', ''),
-    preferDate: new Date(details.preferDate.split(' ')[0]),
-    cleaningTool: details.cleaningTool,
-    basicTool: details.cleaningTool === "Basic tool",
-    vacuum: details.cleaningTool.includes('vacuum'),
-    cleaningToolFee: JSON.parse(details.cleaningToolFee),
-    durationTime: details.durationTime,
-    pricePerHour: details.pricePerHour,
-    total: details.total,
-    note: details?.note,
-  } as any);
-
-  // const formRef = React.useRef();
-
-  // const handleSubmit = () => {
-  //   if ((formRef?.current as any)?.check()) {
-  //     setIsSuccess(true);
-  //   }
-  // };
-
-  const { StringType, NumberType, DateType, BooleanType } = Schema.Types;
-
-  const model = Schema.Model({
-    name: StringType(),
-    phone: StringType(),
-    email: StringType(),
-    address: StringType().isRequired('Vui lòng nhập address'),
-    preferDate: DateType().isRequired('Vui lòng chọn ngày làm việc'),
-    durationTime: NumberType().isRequired('Vui Lòng nhập số giờ làm'),
-    cleaningTool: NumberType(),
-    pricePerHour: StringType(),
-    note:StringType(),
-    total: StringType(),
-  });
+  console.log('formValue', formValue)
 
   return (
-    <>
-      <Container>
-        <Title>Đặt dịch vụ theo giờ</Title>
+    <> <Container>
+      <Title>Đặt dịch vụ theo giờ</Title>
+      <Row style={{alignItems: 'baseline'}}>
+        
+        <Col>
         <Form
-          // ref={formRef as any}
-          // model={model}
-          onChange={() => {}}
-          formValue={formValue}
-        >
-          <Field
-            label='Tên khách hàng'
-            name='name'
-            placeholder='Vui lòng điền tên người đặt dịch vụ'
-          />
-          <Field
-            label='Số điện thoại *'
-            name='phone'
-            placeholder='Nhập số điện thoại'
-          />
-          <Field
-            label='Email *'
-            name='email'
-            placeholder='Email để xác nhận đơn dọn vệ sinh'
-          />
-          <Field
-            label='Địa chỉ'
-            name='address'
-            // onChange={(e: any) => onChangeDistricts(e)}
-          />
-          <Field
-            label="Ngày làm*"
-            accepter={DatePicker}
-            name='preferDate'
-            placeholder="Chọn ngày làm"
-          />
-          <Field
-            label='Giờ làm'
-            name='durationTime'
-            // onChange={(e: any) => onChangeDistricts(e)}
-          />
-          <Field
-            label='Dụng cụ'
-            name='cleaningTool'
-            // onChange={(e: any) => onChangeDistricts(e)}
-          />
-          <Field
-            label='Số tiền 1 giờ'
-            name='pricePerHour'
-            // onChange={(e: any) => onChangeDistricts(e)}
-          />
-          <Field
-            label='Total'
-            name='total'
-            // onChange={(e: any) => onChangeDistricts(e)}
-          />
-          
-          <Form.Group controlId={`tool-3`}>
-            <Form.Control
-              name="tool"
-              accepter={CheckboxGroup}
-              // onChange={(e: any) => onChange(e, "tool")}
-            >
-              <Checkbox
-                checked={formValue.basicTool}
-              >{`Dụng cụ cơ bản - phụ phí: ${formValue?.cleaningToolFee?.basic} vnd`}</Checkbox>
-              <Form.HelpText style={{ margin: "-10px 0 10px 10px" }}>
-                Chổi, cây lau nhà, xô chậu, dẻ, vim, nước lau sàn, dụng cụ chùi
-                toilet,...
-              </Form.HelpText>
-              <Checkbox
-                checked={formValue.vacuum}
-              >{`Máy hút bụi vừa(hút thảm hoặc ghế sofa, nệm) - ${formValue?.cleaningToolFee?.vacuum} vnd`}</Checkbox>
-            </Form.Control>
-          </Form.Group>
-          <Field
-            label="Dặn dò thêm"
-            rows={5}
-            name="note"
-            accepter={Textarea}
-            placeholder="Bạn có thể ghi chú thêm những việc bạn muốn nhân viên dọn vệ sinh chú ý khi làm"
-          />
-          <Row>
-            <div>
-              <span>Tổng</span>:{" "}
-              <span style={{ color: "#01527C", fontSize: "30px" }}>
-                {formValue.total} đồng
-              </span>
-            </div>
+        // ref={formRef as any}
+        // model={model}
+        onChange={() => {}}
+        formValue={formValue}
+      >
+        <Field
+          label='Tên khách hàng'
+          name='name'
+          placeholder='Vui lòng điền tên người đặt dịch vụ'
+        />
+        <Field
+          label='Số điện thoại *'
+          name='phone'
+          placeholder='Nhập số điện thoại'
+        />
+        <Field
+          label='Email *'
+          name='email'
+          placeholder='Email để xác nhận đơn dọn vệ sinh'
+        />
+        <Field
+          label='Địa chỉ'
+          name='address'
+          // onChange={(e: any) => onChangeDistricts(e)}
+        />
+        <Field
+          label="Ngày làm*"
+          accepter={DatePicker}
+          name='preferDate'
+          placeholder="Chọn ngày làm"
+        />
+        <Field
+          label='Giờ làm'
+          name='durationTime'
+          // onChange={(e: any) => onChangeDistricts(e)}
+        />
+        <Field
+          label='Số tiền 1 giờ'
+          name='pricePerHour'
+          // onChange={(e: any) => onChangeDistricts(e)}
+        />
+        
+        <Form.Group controlId={`tool-3`}>
+          <Form.Control
+            name="tool"
+            accepter={CheckboxGroup}
+            // onChange={(e: any) => onChange(e, "tool")}
+          >
+            <Checkbox
+              checked={formValue.basicTool}
+            >{`Dụng cụ cơ bản - phụ phí: ${formValue?.cleaningToolFee?.basic} vnd`}</Checkbox>
+            <Form.HelpText style={{ margin: "-10px 0 10px 10px" }}>
+              Chổi, cây lau nhà, xô chậu, dẻ, vim, nước lau sàn, dụng cụ chùi
+              toilet,...
+            </Form.HelpText>
+            <Checkbox
+              checked={formValue.vacuum}
+            >{`Máy hút bụi vừa(hút thảm hoặc ghế sofa, nệm) - ${formValue?.cleaningToolFee?.vacuum} vnd`}</Checkbox>
+          </Form.Control>
+        </Form.Group>
+        <Field
+          label="Dặn dò thêm"
+          rows={5}
+          name="note"
+          accepter={Textarea}
+          placeholder="Bạn có thể ghi chú thêm những việc bạn muốn nhân viên dọn vệ sinh chú ý khi làm"
+        />
+        <Row>
+          <div>
+            <span>Tổng</span>:{" "}
+            <span style={{ color: "#01527C", fontSize: "30px" }}>
+              {formValue.total} đồng
+            </span>
+          </div>
 
-            <Button
-              type="submit"
-              style={{
-                borderColor: "#042C41",
-                backgroundColor: "#042C41",
-                width: "150px",
-                height: "60px",
-                color: "#fff",
-              }}
-              // onClick={handleSubmit}
-            >
-              Xác Nhận
-            </Button>
-          </Row>
-        </Form>
-      </Container>
+          <Button
+            type="submit"
+            style={{
+              borderColor: "#042C41",
+              backgroundColor: "#042C41",
+              width: "150px",
+              height: "60px",
+              color: "#fff",
+            }}
+            onClick={handleSubmit}
+          >
+            Xác Nhận
+          </Button>
+        </Row>
+      </Form>
+        </Col>
+        <Col style={{display: 'flex', alignItems: 'center'}}>
+        {/* <span>Chọn {formValue.numberOfCleaners || 1} người dọn:</span> */}
+        <CheckPicker placeholder={`Chọn ${formValue.numberOfCleaners || 1} người dọn:`} data={cleanerData} style={{ width: 224, marginTop: '30px' }} value={signedCleaners} onChange={setSignedCleaners}/>
+        </Col>
+      </Row>
+        <Modal size="sm" open={!!errors} onClose={() => setErrors('')}>
+          <div style={{display: 'flex', justifyContent: 'center', textAlign: 'center', flexDirection: 'column'}}>
+          <Modal.Title style={{height: "100px"}}>{errors}</Modal.Title>
+        <Modal.Footer style={{width: '100%', textAlign: 'center',}}>
+          <Button onClick={() => setErrors('')} appearance="primary" style={{width: '150px'}}>
+            Ok
+          </Button>
+          </Modal.Footer>
+          </div>
+      </Modal>
+      
+    </Container>
+      
     </>
   );
 };
 
 const mapDispatchToProps = {
   getJobDetails,
+  getAllCleaners,
+  editJob
 };
 
 const mapStateToProps = (state) => {
-  const jobs = state.adminInfo.jobs.list || [];
+  const job = state.adminInfo.jobDetail
+  const cleaners = state.adminInfo?.cleaners?.list || [];
+  // const editJobState = state.adminInfo?.editJobState
   return {
-    jobs,
+    job,
+    cleaners,
   };
 };
 
