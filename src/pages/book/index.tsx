@@ -176,6 +176,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
         timeStamp: getTimeStamp(),
         timeZone: getTimeZone(),
       },
+      numberOfCleaners: formValue?.numberOfCleaners || 1,
     });
     setWardsOptions(getWards(data?.book?.district));
     return () => {};
@@ -245,6 +246,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
           basic: formValue?.tool?.includes("toolBasic"),
           vacuum: formValue?.tool?.includes("toolCleaner"),
         },
+        numberOfCleaners: formValue?.numberOfCleaners || 1,
       });
     }
 
@@ -255,6 +257,18 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
           basic: !!value?.filter((i: any) => i === "toolBasic").length,
           vacuum: !!value?.filter((i: any) => i === "toolCleaner").length,
         },
+        numberOfCleaners: formValue?.numberOfCleaners || 1,
+      });
+    }
+
+    if (type === "numberOfCleaners") {
+      getBasicInfo({
+        durationTime: getDurationTime(),
+        cleaningTool: {
+          basic: formValue?.tool?.includes("toolBasic"),
+          vacuum: formValue?.tool?.includes("toolCleaner"),
+        },
+        numberOfCleaners: value || 1,
       });
     }
   };
@@ -275,6 +289,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
     pay: data?.book?.pay,
     durationTime: data?.book?.durationTime,
     countPay: data?.book?.countPay || 0,
+    numberOfCleaners: data?.book?.numberOfCleaners,
   } as any);
   const formRef = React.useRef();
 
@@ -424,6 +439,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
                 accepter={SelectPicker}
                 defaultValue={1}
                 data={optionsCleaners}
+                onChange={(e: any) => onChange(e, "numberOfCleaners")}
               />
             </Col>
             <Col style={{ display: "flex" }}>
