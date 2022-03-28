@@ -61,4 +61,8 @@ export namespace api {
   export async function getAllCustomers() {
     return await config.fetchJson(`/api/customer/get`);
   }
+
+  export async function deletePaymentMethod(id) {
+    return await config.formDelete(`/api/paymentmethods/delete/${id}`);
+  }
 }

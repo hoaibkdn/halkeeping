@@ -7,7 +7,8 @@ import {
   GET_PAYMENT_METHODS,
   ADD_EDIT_PAYMENT_METHOD,
   EDIT_JOB,
-  GET_ALL_CUSTOMERS
+  GET_ALL_CUSTOMERS,
+  DELETE_PAYMENT_METHOD
 } from "./actions";
 import getJobsList, { transformPaymentMethods } from "./transforms";
 
@@ -106,11 +107,23 @@ function adminReducer(state: AdminReducer = initState, action: any) {
       };
 
       case GET_ALL_CUSTOMERS .SUCCEED:
-        console.log('customers', action.data)
-        return {
+
+      return {
           ...state,
           customers: {
             list: action.data.customers,
+            hasMore: action.data.hasMore,
+            offset: action.data.offset,
+          },
+        };
+
+        case DELETE_PAYMENT_METHOD.SUCCEED:
+        const paymentMethods = state.paymentMethods?.list.filter(item => item._id !== action.id)
+        
+        return {
+          ...state,
+          paymentMethods: {
+            list: paymentMethods,
             hasMore: action.data.hasMore,
             offset: action.data.offset,
           },
