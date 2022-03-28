@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from "react";
 import { connect } from "react-redux";
-import { getAllPaymentMethod, editPaymentMethod } from "../actions";
+import { getAllPaymentMethod, editPaymentMethod, deletePayment } from "../actions";
 
 import { Table, Input } from "rsuite";
 
@@ -68,6 +68,16 @@ class PaymentMethod extends React.Component {
     }
   };
 
+  onPressDeletePayment = async(id) => {
+    Loading.showLoading();
+    await this.props.deletePayment(id);
+    // this.setState({
+    //   editingValue: "",
+    //   editingMethodId: "",
+    // });
+    Loading.hideLoading();
+  }
+
   render() {
     const {
       paymentMethods: { listIds, paymentDetail },
@@ -106,7 +116,12 @@ class PaymentMethod extends React.Component {
                           ? "Done "
                           : "Edit "}
                       </button>
-                      <button>Delete</button>
+                      <button onClick={() => {
+                        console.log('item', item)
+                          this.onPressDeletePayment(item)
+
+                      }
+                        }>Delete</button>
                     </>
                   ),
                 }
@@ -140,6 +155,7 @@ class PaymentMethod extends React.Component {
 const mapDispatchToProps = {
   getAllPaymentMethod,
   editPaymentMethod,
+  deletePayment
 };
 
 const mapStateToProps = (state) => {

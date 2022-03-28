@@ -11,6 +11,7 @@ export const GET_PAYMENT_METHODS = createActionType("GET_PAYMENT_METHODS");
 export const ADD_EDIT_PAYMENT_METHOD = createActionType("ADD_EDIT_PAYMENT_METHOD");
 export const EDIT_JOB = createActionType("EDIT_JOB")
 export const GET_ALL_CUSTOMERS = createActionType('GET_ALL_CUSTOMERS')
+export const DELETE_PAYMENT_METHOD = createActionType("DELETE_PAYMENT_METHOD");
 
 export function login(data: Record<string, any>) {
   return async function (dispatch: Dispatch) {
@@ -161,4 +162,21 @@ export function getAllCustomers({ limit = 10, offset = 0 }) {
     });
     return { error: true, message: response.data.message };
   };
+}
+
+export function deletePayment(id) {
+  return async function(dispatch: Dispatch) {
+    const response = await api.deletePaymentMethod(id)
+    if (response?.data?.error === 0) {
+      dispatch({
+        type: DELETE_PAYMENT_METHOD.SUCCEED,
+        id,
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: DELETE_PAYMENT_METHOD.FAILED,
+    })
+    return { error: true, message: response.message }
+  }
 }
