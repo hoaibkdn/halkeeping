@@ -20,6 +20,7 @@ import Header from "rsuite/esm/Calendar/Header";
 import SettingIcon from "@rsuite/icons/Setting";
 import ArrowLeftLineIcon from "@rsuite/icons/ArrowLeftLine";
 import ArrowRightLineIcon from "@rsuite/icons/ArrowRightLine";
+import CustomerList from "./Customer/CustomerList";
 
 interface Props {
   adminRole: {
@@ -151,14 +152,9 @@ const Dashboard = (props: Props) => {
                 <Nav.Item eventKey="13">
                   <Link to="/admin/payment">Payment</Link>
                 </Nav.Item>
-                <Dropdown
-                  eventKey="13"
-                  trigger="hover"
-                  title="Customers"
-                  placement="rightStart"
-                >
-                  <Dropdown.Item eventKey="14">Category</Dropdown.Item>
-                </Dropdown>
+                <Nav.Item eventKey="13">
+                  <Link to="/admin/customers">Customers</Link>
+                </Nav.Item>
               </Nav>
             </Sidenav.Body>
           </Sidenav>
@@ -180,6 +176,7 @@ const Dashboard = (props: Props) => {
               <Route exact path="/admin/dashboard" component={JobList} />
               <Route exact path="/admin/cleaners" component={CleanerList} />
               <Route exact path="/admin/payment" component={PaymentMethod} />
+              <Route exact path="/admin/customers" component={CustomerList} />
             </Switch>
             {/* <Loader /> */}
           </Content>

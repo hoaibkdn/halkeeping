@@ -267,6 +267,7 @@ const JobDetails: FC<any> = ({
               accepter={DatePicker}
               name='preferDate'
               placeholder="Chọn ngày làm"
+              format="dd-MM-yyyy"
             />
             <Field
               label='Giờ làm'

@@ -57,4 +57,8 @@ export namespace api {
       data: method,
     });
   }
+
+  export async function getAllCustomers() {
+    return await config.fetchJson(`/api/customer/get`);
+  }
 }
