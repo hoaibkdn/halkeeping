@@ -8,9 +8,12 @@ import {
   ADD_EDIT_PAYMENT_METHOD,
   EDIT_JOB,
   GET_ALL_CUSTOMERS,
-  DELETE_PAYMENT_METHOD
+  DELETE_PAYMENT_METHOD,
 } from "./actions";
-import getJobsList, { transformPaymentMethods } from "./transforms";
+import getJobsList, {
+  transformPaymentMethods,
+  convertCustomers,
+} from "./transforms";
 
 export interface AdminReducer {
   type: string;
@@ -24,6 +27,12 @@ export interface AdminReducer {
     listIds: Array<string>;
     paymentDetail: Object;
   };
+  customers: {
+    listIds: Array<string>;
+    customerDetail: Object;
+    hasMore: boolean;
+    offset: number;
+  };
 }
 
 const initState = {
@@ -32,11 +41,21 @@ const initState = {
     token: "",
     email: "",
   },
-  jobs: {},
+  jobs: {
+    list: [],
+    hasMore: true,
+    offset: 0,
+  },
   cleaners: {},
   paymentMethods: {
     listIds: [],
     paymentDetail: {},
+  },
+  customers: {
+    listIds: [],
+    customerDetail: {},
+    hasMore: true,
+    offset: 0,
   },
 };
 
@@ -97,37 +116,34 @@ function adminReducer(state: AdminReducer = initState, action: any) {
     case GET_JOB_DETAILS.SUCCEED:
       return {
         ...state,
-        jobDetail: action.data
+        jobDetail: action.data,
       };
 
     case EDIT_JOB.SUCCEED:
       return {
         ...state,
-        editJobState: 'success'
+        editJobState: "success",
       };
 
-      case GET_ALL_CUSTOMERS .SUCCEED:
+    case GET_ALL_CUSTOMERS.SUCCEED:
+      return {
+        ...state,
+        customers: convertCustomers(action.data),
+      };
+
+    case DELETE_PAYMENT_METHOD.SUCCEED:
+      const paymentMethods = state.paymentMethods?.list.filter(
+        (item) => item._id !== action.id
+      );
 
       return {
-          ...state,
-          customers: {
-            list: action.data.customers,
-            hasMore: action.data.hasMore,
-            offset: action.data.offset,
-          },
-        };
-
-        case DELETE_PAYMENT_METHOD.SUCCEED:
-        const paymentMethods = state.paymentMethods?.list.filter(item => item._id !== action.id)
-        
-        return {
-          ...state,
-          paymentMethods: {
-            list: paymentMethods,
-            hasMore: action.data.hasMore,
-            offset: action.data.offset,
-          },
-        };
+        ...state,
+        paymentMethods: {
+          list: paymentMethods,
+          hasMore: action.data.hasMore,
+          offset: action.data.offset,
+        },
+      };
     default:
       return state;
   }

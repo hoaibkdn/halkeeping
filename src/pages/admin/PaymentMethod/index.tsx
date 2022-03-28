@@ -83,9 +83,6 @@ class PaymentMethod extends React.Component {
       paymentMethods: { listIds, paymentDetail },
     } = this.props;
     const { currentPage, editingMethodId, editingValue } = this.state;
-    console.log({
-      paymentMethods: this.props,
-    });
     return (
       <>
         <h3 style={{ margin: "30px 0px 30px 40px" }}>All Payment methods</h3>
@@ -160,7 +157,9 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
   const paymentMethods = state.adminInfo?.paymentMethods;
-  const listIds = paymentMethods?.listIds.filter((item) => item);
+  const listIds = paymentMethods?.listIds
+    ? paymentMethods?.listIds.filter((item) => item)
+    : [];
   return {
     paymentMethods: {
       ...paymentMethods,
