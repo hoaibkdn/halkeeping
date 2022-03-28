@@ -6,7 +6,8 @@ import {
   GET_JOB_DETAILS,
   GET_PAYMENT_METHODS,
   ADD_EDIT_PAYMENT_METHOD,
-  EDIT_JOB
+  EDIT_JOB,
+  GET_ALL_CUSTOMERS
 } from "./actions";
 import getJobsList, { transformPaymentMethods } from "./transforms";
 
@@ -103,6 +104,17 @@ function adminReducer(state: AdminReducer = initState, action: any) {
         ...state,
         editJobState: 'success'
       };
+
+      case GET_ALL_CUSTOMERS .SUCCEED:
+        console.log('customers', action.data)
+        return {
+          ...state,
+          customers: {
+            list: action.data.customers,
+            hasMore: action.data.hasMore,
+            offset: action.data.offset,
+          },
+        };
     default:
       return state;
   }
