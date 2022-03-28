@@ -101,7 +101,7 @@ class CleanerList extends React.Component {
           prev={currentPage > 1}
           next={hasMore}
           size="sm"
-          total={hasMore ? currentPage + 1 : currentPage}
+          total={hasMore ? LIMIT * (currentPage + 1) : LIMIT}
           limit={LIMIT}
           activePage={currentPage}
           onChangePage={this.getPagination}
@@ -117,10 +117,6 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
   const cleaners = state.adminInfo?.cleaners?.list || [];
-
-  console.log({
-    stateData: state,
-  });
   return {
     cleaners,
     hasMore: state.adminInfo.cleaners?.hasMore,

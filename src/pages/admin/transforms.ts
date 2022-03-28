@@ -50,5 +50,34 @@ function transformPaymentMethods(allPaymentMethods: Array<{}>) {
   return response
 }
 
-export { transformPaymentMethods }
+function convertCustomers(info: {
+  customers: Array<Object>;
+  hasMore: boolean;
+}) {
+  console.log({
+    info
+  })
+  const result = {
+    hasMore: false,
+    offset: 0,
+    listIds: [],
+    customerDetail: {},
+  };
+  if (!info || !info.customers) {
+    return result;
+  }
+  info.customers.reduce((allIds, customer) => {
+    allIds.push(customer._id);
+    result.customerDetail[customer._id] = customer;
+    return allIds;
+  }, result.listIds);
+  result.hasMore = info.hasMore;
+  result.offset = info.offset || 0;
+  console.log({
+    result
+  })
+  return result;
+}
+
+export { transformPaymentMethods, convertCustomers }
 export default getJobsList;

@@ -10,7 +10,7 @@ import {
   GET_ALL_CUSTOMERS,
   DELETE_PAYMENT_METHOD
 } from "./actions";
-import getJobsList, { transformPaymentMethods } from "./transforms";
+import getJobsList, { transformPaymentMethods, convertCustomers } from "./transforms";
 
 export interface AdminReducer {
   type: string;
@@ -24,6 +24,12 @@ export interface AdminReducer {
     listIds: Array<string>;
     paymentDetail: Object;
   };
+  customers: {
+    listIds: Array<string>;
+    customerDetail: Object;
+    hasMore: boolean;
+    offset: number
+  };
 }
 
 const initState = {
@@ -32,11 +38,21 @@ const initState = {
     token: "",
     email: "",
   },
-  jobs: {},
+  jobs: {
+    list: [],
+    hasMore: true,
+    offset: 0,
+  },
   cleaners: {},
   paymentMethods: {
     listIds: [],
     paymentDetail: {},
+  },
+  customers: {
+    listIds: [],
+    customerDetail: {},
+    hasMore: true,
+    offset: 0
   },
 };
 
@@ -97,15 +113,16 @@ function adminReducer(state: AdminReducer = initState, action: any) {
     case GET_JOB_DETAILS.SUCCEED:
       return {
         ...state,
-        jobDetail: action.data
+        jobDetail: action.data,
       };
 
     case EDIT_JOB.SUCCEED:
       return {
         ...state,
-        editJobState: 'success'
+        editJobState: "success",
       };
 
+<<<<<<< HEAD
       case GET_ALL_CUSTOMERS .SUCCEED:
 
       return {
@@ -128,6 +145,13 @@ function adminReducer(state: AdminReducer = initState, action: any) {
             offset: action.data.offset,
           },
         };
+=======
+    case GET_ALL_CUSTOMERS.SUCCEED:
+      return {
+        ...state,
+        customers: convertCustomers(action.data),
+      };
+>>>>>>> 7eae868 (fix crash empty data)
     default:
       return state;
   }

@@ -6,7 +6,6 @@ import { getAllCustomers } from "./../actions";
 import { Table, Pagination } from "rsuite";
 
 import Loading from "./../../../components/Loading";
-import { Link } from "react-router-dom";
 
 const LIMIT = 10;
 class CustomerList extends React.Component {
@@ -29,22 +28,18 @@ class CustomerList extends React.Component {
     Loading.hideLoading();
   };
 
-  getPagination = async (isPrev = true) => {
-    const offset = isPrev
-      ? this.props.offset - this.props.jobs.length - LIMIT
-      : this.props.offset;
-    const currentPage = isPrev
-      ? this.state.currentPage - 1
-      : this.state.currentPage + 1;
+  getPagination = async (numCurrentPage = 1) => {
+    const offset = numCurrentPage * LIMIT - LIMIT;
+    const currentPage = numCurrentPage;
     await this.loadData(offset, currentPage);
   };
 
   render() {
-    const { customers, hasMore } = this.props;
+    const { listIds, customerDetail, hasMore } = this.props;
     const { currentPage } = this.state;
-    console.log({
-        customers,
-    });
+    if (!listIds) {
+      return null;
+    }
     return (
       <>
         <h3 style={{ margin: "30px 0px 30px 40px" }}>All Customers</h3>
@@ -52,31 +47,26 @@ class CustomerList extends React.Component {
         {error && <Alert variant="error">{message}</Alert>} */}
         <Table
           height={400}
-          data={customers.map((item, index) => ({
-            ...item,
-            no: (currentPage - 1) * LIMIT + index + 1,
-            facebook: (
-              <Link
-                to={{ pathname: item.facebook }}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.facebook}
-              </Link>
-            ),
-          }))}
+          data={listIds.map((item, index) =>
+            item
+              ? {
+                  ...customerDetail[item],
+                  no: (currentPage - 1) * LIMIT + index + 1,
+                }
+              : null
+          )}
         >
           <Table.Column width={70} align="right" fixed>
             <Table.HeaderCell>No</Table.HeaderCell>
             <Table.Cell dataKey="no" />
           </Table.Column>
 
-          <Table.Column width={120} fixed>
+          <Table.Column width={200} fixed>
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.Cell dataKey="name" />
           </Table.Column>
 
-          <Table.Column width={120}>
+          <Table.Column width={200}>
             <Table.HeaderCell>Phone</Table.HeaderCell>
             <Table.Cell dataKey="phone" />
           </Table.Column>
@@ -86,7 +76,7 @@ class CustomerList extends React.Component {
             <Table.Cell dataKey="address" />
           </Table.Column>
 
-          <Table.Column width={100}>
+          <Table.Column width={300}>
             <Table.HeaderCell>Email</Table.HeaderCell>
             <Table.Cell dataKey="email"></Table.Cell>
           </Table.Column>
@@ -96,7 +86,7 @@ class CustomerList extends React.Component {
           prev={currentPage > 1}
           next={hasMore}
           size="sm"
-          total={hasMore ? currentPage + 1 : currentPage}
+          total={hasMore ? LIMIT * (currentPage + 1) : LIMIT}
           limit={LIMIT}
           activePage={currentPage}
           onChangePage={this.getPagination}
@@ -111,15 +101,10 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => {
-  const customers = state.adminInfo?.customers?.list || [];
+  const customers = state.adminInfo?.customers || {};
 
-  console.log({
-    stateData: state,
-  });
   return {
-    customers,
-    hasMore: state.adminInfo.customers?.hasMore,
-    offset: state.adminInfo.customers?.offset || 0,
+    ...customers,
   };
 };
 

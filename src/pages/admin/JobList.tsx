@@ -1,11 +1,11 @@
 // @ts-nocheck
-import React from 'react';
-import { connect } from 'react-redux';
-import { getAllJobs } from './actions';
-import { useHistory } from "react-router-dom"
-import { Table, Pagination } from 'rsuite';
+import React from "react";
+import { connect } from "react-redux";
+import { getAllJobs } from "./actions";
+import { useHistory } from "react-router-dom";
+import { Table, Pagination } from "rsuite";
 
-import Loading from '../../components/Loading';
+import Loading from "../../components/Loading";
 
 const LIMIT = 10;
 class JobList extends React.Component {
@@ -44,7 +44,7 @@ class JobList extends React.Component {
 
     return (
       <>
-        <h3 style={{margin: '30px 0px 30px 40px'}}>All Jobs</h3>
+        <h3 style={{ margin: "30px 0px 30px 40px" }}>All Jobs</h3>
         {/* {isSucceed && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="error">{message}</Alert>} */}
         <Table
@@ -53,62 +53,62 @@ class JobList extends React.Component {
             ...item,
             no: (currentPage - 1) * LIMIT + index + 1,
             ...item.customer,
-            ...item.jobDetail
+            ...item.jobDetail,
           }))}
-          onRowClick={data => {
-            this.props.history.push(`/admin/job/${data.jobId}`)
+          onRowClick={(data) => {
+            this.props.history.push(`/admin/job/${data.jobId}`);
           }}
         >
-          <Table.Column width={70} align='right' fixed>
+          <Table.Column width={70} align="right" fixed>
             <Table.HeaderCell>No</Table.HeaderCell>
-            <Table.Cell dataKey='no' />
+            <Table.Cell dataKey="no" />
           </Table.Column>
 
           <Table.Column width={120} fixed>
             <Table.HeaderCell>Customer name</Table.HeaderCell>
-            <Table.Cell dataKey='name' />
+            <Table.Cell dataKey="name" />
           </Table.Column>
 
           <Table.Column width={300}>
             <Table.HeaderCell>Address</Table.HeaderCell>
-            <Table.Cell dataKey='address' />
+            <Table.Cell dataKey="address" />
           </Table.Column>
 
           <Table.Column width={100}>
             <Table.HeaderCell>Phone</Table.HeaderCell>
-            <Table.Cell dataKey='phone' />
+            <Table.Cell dataKey="phone" />
           </Table.Column>
 
           <Table.Column width={120}>
             <Table.HeaderCell>Prefer date</Table.HeaderCell>
-            <Table.Cell dataKey='preferDate' />
+            <Table.Cell dataKey="preferDate" />
           </Table.Column>
 
           <Table.Column width={150}>
             <Table.HeaderCell>Working duration</Table.HeaderCell>
-            <Table.Cell dataKey='durationTime' />
+            <Table.Cell dataKey="durationTime" />
           </Table.Column>
 
           <Table.Column width={200}>
             <Table.HeaderCell>Cleaning tool</Table.HeaderCell>
-            <Table.Cell dataKey='cleaningTool' />
+            <Table.Cell dataKey="cleaningTool" />
           </Table.Column>
           <Table.Column width={100}>
             <Table.HeaderCell>Price per hour</Table.HeaderCell>
-            <Table.Cell dataKey='pricePerHour' />
+            <Table.Cell dataKey="pricePerHour" />
           </Table.Column>
           <Table.Column width={100}>
             <Table.HeaderCell>Note</Table.HeaderCell>
-            <Table.Cell dataKey='note' />
+            <Table.Cell dataKey="note" />
           </Table.Column>
           <Table.Column width={100}>
             <Table.HeaderCell>Total</Table.HeaderCell>
-            <Table.Cell dataKey='total' />
+            <Table.Cell dataKey="total" />
           </Table.Column>
           <Table.Column width={100}>
             <Table.HeaderCell>Booking time</Table.HeaderCell>
 
-            <Table.Cell dataKey='bookingTime' />
+            <Table.Cell dataKey="bookingTime" />
           </Table.Column>
         </Table>
 
@@ -131,15 +131,15 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => {
-  const jobs = state.adminInfo.jobs.list || [];
+  const jobs = state.adminInfo.jobs?.list || [];
 
   console.log({
     state,
   });
   return {
     jobs,
-    hasMore: state.adminInfo.jobs.hasMore,
-    offset: state.adminInfo.jobs.offset || 0,
+    hasMore: state.adminInfo.jobs?.hasMore,
+    offset: state.adminInfo.jobs?.offset || 0,
   };
 };
 
