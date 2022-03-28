@@ -54,9 +54,6 @@ function convertCustomers(info: {
   customers: Array<Object>;
   hasMore: boolean;
 }) {
-  console.log({
-    info
-  })
   const result = {
     hasMore: false,
     offset: 0,
@@ -73,9 +70,6 @@ function convertCustomers(info: {
   }, result.listIds);
   result.hasMore = info.hasMore;
   result.offset = info.offset || 0;
-  console.log({
-    result
-  })
   return result;
 }
 
