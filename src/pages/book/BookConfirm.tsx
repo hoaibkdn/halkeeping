@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import { Modal, Button, Loader } from "rsuite";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 interface State {
   publicPages: PublicReducer;
@@ -82,8 +84,8 @@ const BookConfirm = (props: Props) => {
       name: data.name,
       address: data.address,
       email: data.email,
-      preferDate: date,
-      time: time,
+      preferDate: new Date(data.date)?.getTime(),
+      startWorkingTime: time,
       durationTime: (data.hour || 0) * 60 + (data.minutes || 0),
       cleaningTool: {
         basic: data?.tool?.includes("toolBasic"),
@@ -92,6 +94,7 @@ const BookConfirm = (props: Props) => {
       unit: "vnd",
       note: data.note,
       numberOfCleaners: data.numberOfCleaners || 1,
+      payMethod: data?.payMethod,
     };
 
     const res = await props.createJob(uploadData);
@@ -105,6 +108,7 @@ const BookConfirm = (props: Props) => {
 
   return (
     <>
+      <Header />
       <Modal open={isSuccess} onClose={handleClose}>
         <Modal.Header style={{ display: "flex", justifyContent: "center" }}>
           <Modal.Title style={{ textAlign: "center", width: "80%" }}>
@@ -212,6 +216,7 @@ const BookConfirm = (props: Props) => {
           </Button>
         </div>
       </Container>
+      <Footer />
     </>
   );
 };

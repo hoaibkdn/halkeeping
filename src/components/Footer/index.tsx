@@ -225,7 +225,7 @@ const Footer: FC<FooterProps> = ({}) => {
               {/* <ContactText>{text}</ContactText> */}
             </ContactItem>
             <ContactItem>
-              Số điện thoai / zalo: 0706145980
+              Số điện thoai / zalo: 0785359038
               {/* <ContactText>{text}</ContactText> */}
             </ContactItem>
             <ContactItem>

@@ -25,7 +25,7 @@ const Zalo = styled.span`
 
 const Chatboxes = ({
   fbPageId = "2520030718061642",
-  zaloNumber = "0706145980",
+  zaloNumber = "0785359038",
 }) => {
   const [fbLoaded, setFBLoaded] = useState(false);
 

@@ -1,9 +1,7 @@
-
-import styled from "styled-components"
-import hard_working from "../../assets/images/hard-working.png"
-import consultant from "../../assets/images/consultant.png"
-import listen_cus from "../../assets/images/listen-to-custumer.png"
-
+import styled from "styled-components";
+import hard_working from "../../assets/images/hard-working.png";
+import consultant from "../../assets/images/consultant.png";
+import listen_cus from "../../assets/images/listen-to-custumer.png";
 
 const Section = styled.section`
   & > div {
@@ -21,10 +19,9 @@ const Section = styled.section`
     & > div {
       display: flex;
       justify-content: space-between;
-      
     }
   }
-`
+`;
 
 const Advantage = styled.div`
   width: 250px;
@@ -44,28 +41,30 @@ const Advantage = styled.div`
     text-align: center;
     margin-top: 20px;
   }
-`
+`;
 
 const Advantages = () => {
-  return <Section>
-    <div>
-      <h4>TẠI SAO NÊN CHỌN HALKEEPING</h4>
-      <div className="services">
-        <Advantage>
-          <img src={hard_working}/>
-          <p>Nhân viên chăm chỉ</p>
-        </Advantage>
-        <Advantage>
-          <img src={listen_cus} />
-          <p>Luon lang nghe khach hang</p>
-        </Advantage>
-        <Advantage>
-          <img src={consultant}/>
-          <p>Tư vấn tận tâm</p>
-        </Advantage>
+  return (
+    <Section>
+      <div>
+        <h4>TẠI SAO NÊN CHỌN HALKEEPING</h4>
+        <div className="services">
+          <Advantage>
+            <img src={hard_working} />
+            <p>Nhân viên chăm chỉ</p>
+          </Advantage>
+          <Advantage>
+            <img src={listen_cus} />
+            <p>Luôn lắng nghe khách hàng</p>
+          </Advantage>
+          <Advantage>
+            <img src={consultant} />
+            <p>Tư vấn tận tâm</p>
+          </Advantage>
+        </div>
       </div>
-    </div>
-  </Section>
-}
+    </Section>
+  );
+};
 
-export default Advantages
+export default Advantages;
