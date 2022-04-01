@@ -50,16 +50,16 @@ const Row = styled.div`
   justify-content: space-between;
 `;
 
-const optionsPay = [
-  {
-    value: "Tiền mặt",
-    label: "Tiền mặt",
-  },
-  {
-    value: "Thẻ thanh toán",
-    label: "Thẻ thanh toán",
-  },
-];
+// const optionsPay = [
+//   {
+//     value: "Tiền mặt",
+//     label: "Tiền mặt",
+//   },
+//   {
+//     value: "Thẻ thanh toán",
+//     label: "Thẻ thanh toán",
+//   },
+// ];
 
 const optionsHours = [
   {
@@ -191,6 +191,11 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
     },
   };
 
+  const optionsPay = basicInfo?.paymentMethod?.map((i: any) => ({
+    value: i.method,
+    label: i.method,
+  }));
+
   const getTimeZone = () => {
     return -(new Date().getTimezoneOffset() / 60);
   };
@@ -222,7 +227,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
         districts?.filter((i: any) => i.value === formValue.district)[0]?.label
       }`,
       durationTime: `${formValue.hour} tiếng ${formValue.minutes || 0} phút`,
-      payMethod: formValue.pay || "Tiền mặt",
+      payMethod: formValue.pay || optionsPay[0]?.value,
       countPay: basicInfo?.total | 0,
     };
 
@@ -387,6 +392,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
           <Row>
             <Col>
               <Field
+                oneTap
                 label="Ngày làm*"
                 accepter={DatePicker}
                 name="date"
@@ -410,7 +416,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
                 name="time"
                 format="hh:mm"
                 ranges={[]}
-                disabledHours={(hour: any) => {
+                hideHours={(hour: any) => {
                   let start = new Date(workingTime.start).getHours();
                   let end = workingTime.dailyWorkingTime.end;
 
@@ -473,7 +479,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
               label="Thanh toán"
               name="pay"
               accepter={SelectPicker}
-              placeholder="Tiền mặt"
+              defaultValue={optionsPay[0]?.value}
               searchable={false}
               data={optionsPay}
             />
