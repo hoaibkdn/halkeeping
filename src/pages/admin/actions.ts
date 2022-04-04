@@ -122,6 +122,12 @@ export function editPaymentMethod(method) {
         type: ADD_EDIT_PAYMENT_METHOD.SUCCEED,
         method
       })
+      return {
+        error: 0
+      }
+    }
+    return {
+      error: 1
     }
   }
 }
