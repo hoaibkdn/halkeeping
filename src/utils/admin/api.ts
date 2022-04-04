@@ -65,4 +65,11 @@ export namespace api {
   export async function deletePaymentMethod(id) {
     return await config.formDelete(`/api/paymentmethods/delete/${id}`);
   }
+
+  export async function addCleaner(cleaner) {
+    return await config.jsonPost({
+      url: `/api/cleaner/add`,
+      data: cleaner,
+    });
+  }
 }

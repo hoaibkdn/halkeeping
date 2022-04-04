@@ -12,6 +12,7 @@ export const ADD_EDIT_PAYMENT_METHOD = createActionType("ADD_EDIT_PAYMENT_METHOD
 export const EDIT_JOB = createActionType("EDIT_JOB")
 export const GET_ALL_CUSTOMERS = createActionType('GET_ALL_CUSTOMERS')
 export const DELETE_PAYMENT_METHOD = createActionType("DELETE_PAYMENT_METHOD");
+export const ADD_CLEANER = createActionType("ADD_CLEANER")
 
 export function login(data: Record<string, any>) {
   return async function (dispatch: Dispatch) {
@@ -176,6 +177,22 @@ export function deletePayment(id) {
     }
     dispatch({
       type: DELETE_PAYMENT_METHOD.FAILED,
+    })
+    return { error: true, message: response.message }
+  }
+}
+
+export function addCleaner(data) {
+  return async function(dispatch: Dispatch) {
+    const response = await api.addCleaner(data)
+    if (response?.data?.error === 0) {
+      dispatch({
+        type: ADD_CLEANER.SUCCEED,
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: ADD_CLEANER.FAILED,
     })
     return { error: true, message: response.message }
   }

@@ -21,6 +21,7 @@ import SettingIcon from "@rsuite/icons/Setting";
 import ArrowLeftLineIcon from "@rsuite/icons/ArrowLeftLine";
 import ArrowRightLineIcon from "@rsuite/icons/ArrowRightLine";
 import CustomerList from "./Customer/CustomerList";
+import AddCleaner from "./Cleaner/AddCleaner";
 
 interface Props {
   adminRole: {
@@ -42,48 +43,6 @@ const headerStyles = {
   whiteSpace: "nowrap",
   overflow: "hidden",
 };
-
-const iconStyles = {
-  width: 56,
-  height: 56,
-  padding: 18,
-  lineHeight: "56px",
-  textAlign: "center",
-};
-
-const data = [
-  {
-    label: "Home",
-    path: "/admin/dashboard",
-    eventKey: "0",
-    children: [
-      {
-        label: "All jobs",
-        path: "/admin/dashboard",
-        eventKey: "2",
-      },
-    ],
-  },
-  {
-    label: "Cleaners",
-    onClick: () => null,
-    eventKey: "12",
-    path: "/admin/cleaners",
-  },
-  {
-    label: "Customers",
-    onClick: () => null,
-    eventKey: "13",
-    path: "/admin/customers",
-    children: [
-      {
-        label: "Category",
-        path: "/admin/product/category",
-        eventKey: "14",
-      },
-    ],
-  },
-];
 
 const NavToggle = ({ expand, onChange }) => {
   return (
@@ -137,7 +96,7 @@ const Dashboard = (props: Props) => {
             <Sidenav.Body>
               <Nav>
                 <Dropdown
-                  eventKey="0"
+                  eventKey="1"
                   trigger="hover"
                   title="Home"
                   placement="rightStart"
@@ -146,13 +105,21 @@ const Dashboard = (props: Props) => {
                     <Link to="/admin/dashboard">All Jobs</Link>
                   </Dropdown.Item>
                 </Dropdown>
-                <Nav.Item eventKey="12">
-                  <Link to="/admin/cleaners">Cleaners</Link>
-                </Nav.Item>
-                <Nav.Item eventKey="13">
+
+                <Dropdown
+                  eventKey="12"
+                  trigger="hover"
+                  title={<Link to="/admin/cleaners">Cleaners</Link>}
+                  placement="rightStart"
+                >
+                  <Dropdown.Item eventKey="13">
+                    <Link to="/admin/add-cleaner">Add cleaner</Link>
+                  </Dropdown.Item>
+                </Dropdown>
+                <Nav.Item eventKey="14">
                   <Link to="/admin/payment">Payment</Link>
                 </Nav.Item>
-                <Nav.Item eventKey="13">
+                <Nav.Item eventKey="15">
                   <Link to="/admin/customers">Customers</Link>
                 </Nav.Item>
               </Nav>
@@ -177,6 +144,7 @@ const Dashboard = (props: Props) => {
               <Route exact path="/admin/cleaners" component={CleanerList} />
               <Route exact path="/admin/payment" component={PaymentMethod} />
               <Route exact path="/admin/customers" component={CustomerList} />
+              <Route exact path="/admin/add-cleaner" component={AddCleaner} />
             </Switch>
             {/* <Loader /> */}
           </Content>
