@@ -99,7 +99,7 @@ function adminReducer(state: AdminReducer = initState, action: any) {
         if (state.paymentMethods.listIds.includes(edittingId)) {
           return state.paymentMethods.listIds;
         }
-        return [...state.paymentMethods.listIds, edittingId];
+        return [edittingId, ...state.paymentMethods.listIds];
       };
       const newMethodIds = getNewMethodIds();
       return {
@@ -132,16 +132,16 @@ function adminReducer(state: AdminReducer = initState, action: any) {
       };
 
     case DELETE_PAYMENT_METHOD.SUCCEED:
-      const paymentMethods = state.paymentMethods?.list.filter(
-        (item) => item._id !== action.id
+      const paymentMethodsIds = state.paymentMethods?.listIds.filter(
+        (item) => item !== action.id
       );
 
+      delete state.paymentMethods.paymentDetail[action.id]
       return {
         ...state,
         paymentMethods: {
-          list: paymentMethods,
-          hasMore: action.data.hasMore,
-          offset: action.data.offset,
+          listIds: paymentMethodsIds,
+          paymentDetail: state.paymentMethods.paymentDetail 
         },
       };
     default:
