@@ -28,13 +28,9 @@ class JobList extends React.Component {
     Loading.hideLoading();
   };
 
-  getPagination = async (isPrev = true) => {
-    const offset = isPrev
-      ? this.props.offset - this.props.jobs.length - LIMIT
-      : this.props.offset;
-    const currentPage = isPrev
-      ? this.state.currentPage - 1
-      : this.state.currentPage + 1;
+  getPagination = async (numCurrentPage = 1) => {
+    const offset = numCurrentPage * LIMIT - LIMIT;
+    const currentPage = numCurrentPage;
     await this.loadData(offset, currentPage);
   };
 
@@ -48,7 +44,7 @@ class JobList extends React.Component {
         {/* {isSucceed && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="error">{message}</Alert>} */}
         <Table
-          height={400}
+          height={600}
           data={jobs.map((item, index) => ({
             ...item,
             no: (currentPage - 1) * LIMIT + index + 1,
@@ -84,12 +80,12 @@ class JobList extends React.Component {
             <Table.Cell dataKey="preferDate" />
           </Table.Column>
 
-          <Table.Column width={150}>
-            <Table.HeaderCell>Working duration</Table.HeaderCell>
+          <Table.Column width={100}>
+            <Table.HeaderCell>Duration</Table.HeaderCell>
             <Table.Cell dataKey="durationTime" />
           </Table.Column>
 
-          <Table.Column width={200}>
+          <Table.Column width={100}>
             <Table.HeaderCell>Cleaning tool</Table.HeaderCell>
             <Table.Cell dataKey="cleaningTool" />
           </Table.Column>
@@ -116,7 +112,7 @@ class JobList extends React.Component {
           prev={currentPage > 1}
           next={hasMore}
           size="sm"
-          total={hasMore ? currentPage + 1 : currentPage}
+          total={hasMore ? LIMIT * (currentPage + 1) : LIMIT}
           limit={LIMIT}
           activePage={currentPage}
           onChangePage={this.getPagination}
@@ -132,10 +128,6 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
   const jobs = state.adminInfo.jobs?.list || [];
-
-  console.log({
-    state,
-  });
   return {
     jobs,
     hasMore: state.adminInfo.jobs?.hasMore,
