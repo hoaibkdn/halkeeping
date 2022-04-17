@@ -35,12 +35,11 @@ const Chatboxes = ({
 
     msgScript.id = "facebook-ssdk";
     msgScript.src =
-      "https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js";
+      "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
     msgScript.async = true;
     msgScript.defer = true;
 
-    script.src =
-      "https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0";
+    script.src = "https://connect.facebook.net/en_US/sdk.js";
     script.async = true;
     script.defer = true;
 
