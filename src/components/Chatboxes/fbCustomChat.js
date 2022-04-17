@@ -9,10 +9,8 @@ export const controlPlugin = () => {
 export const setFbAsyncInit = () => {
   window.fbAsyncInit = () => {
     window.FB.init({
-      appId: "2520030718061642",
-      autoLogAppEvents: true,
       xfbml: true,
-      version: "v3.3",
+      version: "v13.0",
     });
   };
 };

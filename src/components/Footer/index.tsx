@@ -130,63 +130,7 @@ const Container = styled.div`
 `;
 
 const Footer: FC<FooterProps> = ({}) => {
-  //   const contact = [
-  //     {
-  //       icon: {
-  //         url: mapPin,
-  //         alt: "map",
-  //       },
-  //       text: data?.address,
-  //     },
-  //     {
-  //       icon: {
-  //         url: mobile,
-  //         alt: "phone",
-  //       },
-  //       text: data?.phone,
-  //     },
-  //     {
-  //       icon: {
-  //         url: globe,
-  //         alt: "web",
-  //       },
-  //       text: data?.website,
-  //     },
-  //   ]
-
-  //   const icons = [
-  //     {
-  //       url: data?.instagram,
-  //       icon: {
-  //         url: ins,
-  //         alt: "ins",
-  //       },
-  //     },
-  //     {
-  //       url: data?.facebook,
-  //       icon: {
-  //         url: fb,
-  //         alt: "fb",
-  //       },
-  //     },
-  //     {
-  //       url: data?.youtube,
-  //       icon: {
-  //         url: yout,
-  //         alt: "youtube",
-  //       },
-  //     },
-  //   ]
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src =
-      "https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0";
-    script.async = true;
-    script.defer = true;
-
-    document.body.appendChild(script);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Wrapper>

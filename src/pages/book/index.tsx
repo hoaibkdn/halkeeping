@@ -192,8 +192,8 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
   };
 
   const optionsPay = basicInfo?.paymentMethod?.map((i: any) => ({
-    value: i.method,
-    label: i.method,
+    value: i.method || i.name,
+    label: i.method || i.name,
   }));
 
   const getTimeZone = () => {
@@ -294,7 +294,6 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
     pay: data?.book?.pay,
     durationTime: data?.book?.durationTime,
     countPay: data?.book?.countPay || 0,
-    numberOfCleaners: data?.book?.numberOfCleaners,
   } as any);
   const formRef = React.useRef();
 
@@ -479,7 +478,7 @@ const Book: FC<any> = ({ data = [], getProvinces, book, getBasicInfo }) => {
               label="Thanh toán"
               name="pay"
               accepter={SelectPicker}
-              defaultValue={optionsPay[0]?.value}
+              defaultValue={optionsPay?.[0]?.value}
               searchable={false}
               data={optionsPay}
             />
