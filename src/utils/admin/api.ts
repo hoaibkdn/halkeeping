@@ -72,4 +72,28 @@ export namespace api {
       data: cleaner,
     });
   }
+
+  export async function getCleanerDetails(id) {
+    return await config.fetchJson(`/api/cleaner/detail/${id}`);
+  }
+
+  export async function getCustomerDetails(id) {
+    return await config.fetchJson(`/api/customer/detail/${id}`);
+  }
+
+  export async function editCleaner(cleaner, id) {
+    console.log('call api')
+    return await config.formPut(
+      `/api/cleaner/edit/${id}`,
+      cleaner,
+    );
+  }
+
+  export async function editCustomer(custom, id) {
+    console.log('call api')
+    return await config.formPut(
+      `/api/customer/edit/${id}`,
+      custom,
+    );
+  }
 }

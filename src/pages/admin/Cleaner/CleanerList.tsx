@@ -29,13 +29,9 @@ class CleanerList extends React.Component {
     Loading.hideLoading();
   };
 
-  getPagination = async (isPrev = true) => {
-    const offset = isPrev
-      ? this.props.offset - this.props.jobs.length - LIMIT
-      : this.props.offset;
-    const currentPage = isPrev
-      ? this.state.currentPage - 1
-      : this.state.currentPage + 1;
+  getPagination = async (numCurrentPage = 1) => {
+    const offset = numCurrentPage * LIMIT - LIMIT;
+    const currentPage = numCurrentPage;
     await this.loadData(offset, currentPage);
   };
 
@@ -54,6 +50,7 @@ class CleanerList extends React.Component {
           height={400}
           data={cleaners.map((item, index) => ({
             ...item,
+            isActive: item.isActive ? 'Active' : 'Inactive',
             no: (currentPage - 1) * LIMIT + index + 1,
             facebook: (
               <Link
@@ -65,6 +62,9 @@ class CleanerList extends React.Component {
               </Link>
             ),
           }))}
+          onRowClick={(data) => {
+            this.props.history.push(`/admin/update-cleaner/${data._id}`);
+          }}
         >
           <Table.Column width={70} align="right" fixed>
             <Table.HeaderCell>No</Table.HeaderCell>
@@ -79,6 +79,10 @@ class CleanerList extends React.Component {
           <Table.Column width={120}>
             <Table.HeaderCell>Phone</Table.HeaderCell>
             <Table.Cell dataKey="phone" />
+          </Table.Column>
+          <Table.Column width={250}>
+            <Table.HeaderCell>Address</Table.HeaderCell>
+            <Table.Cell dataKey="address" />
           </Table.Column>
 
           <Table.Column width={300}>

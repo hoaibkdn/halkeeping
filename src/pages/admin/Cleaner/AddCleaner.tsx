@@ -3,20 +3,16 @@ import {
   Schema,
   ButtonToolbar,
   Button,
-  Row,
-  SelectPicker,
-  Container,
   Toggle,
 } from 'rsuite';
 import { useRef, useEffect, useState, FC, useCallback } from 'react';
 import Field from '../../../components/Form/Field';
 import { asyncCheckPhone } from '../../../components/Form/form';
-import { getProvinces } from '../../redux/actions';
 import { connect } from 'react-redux';
-import { Label } from '../../../components/Form/style';
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import styled from 'styled-components';
-import { addCleaner } from '../actions';
+import { addCleaner, getCleanerDetails, editCleaner } from '../actions';
+import { AdminReducer } from '../reducer';
 
 export interface PublicReducer {
   type: string;
@@ -26,6 +22,7 @@ export interface PublicReducer {
 
 interface State {
   publicPages: PublicReducer;
+  adminInfo: AdminReducer
 }
 
 const Title = styled.h6`
@@ -35,47 +32,60 @@ const Title = styled.h6`
   font-weight: 650;
 `;
 
-const AddCleanerForm: FC<any> = ({ getProvinces, provinces, addCleaner }) => {
+const AddCleanerForm: FC<any> = ({ addCleaner, getCleanerDetails, cleanerDetails, editCleaner }) => {
+  const {id } = useParams() as {id: string}
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     facebook: '',
-    district: '',
-    ward: '',
-    numberHouse: '',
+    address: '',
     isActive: true,
   } as any);
   const formRef = useRef();
   const history = useHistory();
 
-  const districts = provinces?.districts?.map((i: any) => {
-    return {
-      value: i.codename,
-      label: i.name,
-      wards: i.wards,
-    };
-  });
-  const getWards = (value: string) => {
-    return districts
-      ?.filter((i: any) => i.value === value)?.[0]
-      ?.wards?.map((k: any) => ({
-        value: k.codename,
-        label: k.name,
-      }));
-  };
-  const [wards, setWardsOptions] = useState([]);
+  // const districts = provinces?.districts?.map((i: any) => {
+  //   return {
+  //     value: i.codename,
+  //     label: i.name,
+  //     wards: i.wards,
+  //   };
+  // });
+  // const getWards = (value: string) => {
+  //   return districts
+  //     ?.filter((i: any) => i.value === value)?.[0]
+  //     ?.wards?.map((k: any) => ({
+  //       value: k.codename,
+  //       label: k.name,
+  //     }));
+  // };
+  // const [wards, setWardsOptions] = useState([]);
+
+  // useEffect(() => {
+  //   // getProvinces();
+  //   setWardsOptions(getWards(formData.district));
+  //   return () => {};
+  // }, []);
 
   useEffect(() => {
-    getProvinces();
-    setWardsOptions(getWards(formData.district));
+    if(id) {
+      getCleanerDetails(id)
+    }
     return () => {};
-  }, []);
+  }, [id]);
 
-  const onChangeDistricts = useCallback((val: string) => {
-    const options = getWards(val);
+  useEffect(() => {
+    if(id && cleanerDetails) {
+      setFormData(cleanerDetails)
+    }
+    return () => {};
+  }, [id, cleanerDetails]);
 
-    setWardsOptions(options || []);
-  }, []);
+  // const onChangeDistricts = useCallback((val: string) => {
+  //   const options = getWards(val);
+
+  //   setWardsOptions(options || []);
+  // }, []);
 
   const { StringType, BooleanType } = Schema.Types;
 
@@ -87,37 +97,39 @@ const AddCleanerForm: FC<any> = ({ getProvinces, provinces, addCleaner }) => {
   };
 
   const model = Schema.Model({
-    name: StringType(),
+    name: StringType().isRequired('Vui lòng nhập tên nhân viên'),
     phone: StringType()
-      .isRequired('Vui Lòng nhập số điện thoại')
+      .isRequired('Vui lòng nhập số điện thoại')
       .addRule(
         (value, data) => asyncCheckPhone(value),
         'Vui lòng nhập đúng số điện thoại hợp lệ'
       ),
     address: StringType().isRequired('Vui lòng chọn thông tin chọn quận'),
-    ward: StringType().isRequired('Vui lòng chọn thông tin chọn phường/xã'),
-    numberHouse: StringType().isRequired(
-      'Vui lòng điền thông tin địa chỉ cu thể'
-    ),
     isActive: BooleanType(),
   });
   
 
   const onSubmit = async () => {
-    const {
-      name,
-      phone,
-      facebook,
-      district,
-      ward,
-      numberHouse,
-      isActive,
-    } = formData
-    await addCleaner({
-      name, phone, facebook, address: `${numberHouse}, ${ward}, ${district}`,  isActive
-    })
+    if ((formRef?.current as any)?.check()) {
+      const {
+        name,
+        phone,
+        facebook,
+        address,
+        isActive,
+      } = formData
+      if(id) {
+        await editCleaner({name, phone, facebook, address,  isActive}, id)
+        history.push(`/admin/cleaners`);
 
-    history.push(`/admin/cleaners`);
+        return
+      }
+
+      await addCleaner({name, phone, facebook, address,  isActive})
+      history.push(`/admin/cleaners`);
+  
+    }
+    
   }
 
   return (
@@ -146,33 +158,13 @@ const AddCleanerForm: FC<any> = ({ getProvinces, provinces, addCleaner }) => {
           name='facebook'
           placeholder='Vui lòng điền link facebook'
         />
-        <Row>
-          <Label>Địa chỉ *</Label>
-        </Row>
         <Field
-          label='Quận/ Huyện'
-          name='district'
-          accepter={SelectPicker}
-          placeholder='Vui lòng chọn quận'
-          onChange={(e: any) => onChangeDistricts(e)}
-          data={districts}
-        />
-        <Field
-          label='Phường/ xã'
-          name='ward'
-          accepter={SelectPicker}
-          placeholder='Vui lòng chọn phường/ xã'
-          data={wards}
-        />
-        <Field
-          label='Số nhà cụ thể'
-          name='numberHouse'
+          label='Địa chỉ *'
+          name='address'
           placeholder='Vui lòng điền thông tin địa chỉ cụ thể'
-          rows={5}
         />
-
         <Field
-          name='ward'
+          name='isActive'
           accepter={() => (
             <Toggle
               onChange={onChangeRadio}
@@ -183,7 +175,6 @@ const AddCleanerForm: FC<any> = ({ getProvinces, provinces, addCleaner }) => {
             />
           )}
           placeholder='Vui lòng chọn phường/ xã'
-          data={wards}
         />
 
         <ButtonToolbar>
@@ -196,12 +187,14 @@ const AddCleanerForm: FC<any> = ({ getProvinces, provinces, addCleaner }) => {
 };
 
 const mapDispatchToProps = {
-  getProvinces,
   addCleaner,
+  getCleanerDetails,
+  editCleaner,
 };
 
 const mapStateToProps = (state: State) => ({
   provinces: state?.publicPages.province,
+  cleanerDetails: state?.adminInfo?.cleanerDetails
 });
 
 export default connect(

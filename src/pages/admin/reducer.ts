@@ -9,6 +9,10 @@ import {
   EDIT_JOB,
   GET_ALL_CUSTOMERS,
   DELETE_PAYMENT_METHOD,
+  GET_CLEANER_DETAILS,
+  EDIT_CLEANER,
+  EDIT_CUSTOMER,
+  GET_CUSTOMER_DETAILS,
 } from "./actions";
 import getJobsList, {
   transformPaymentMethods,
@@ -33,6 +37,7 @@ export interface AdminReducer {
     hasMore: boolean;
     offset: number;
   };
+  cleanerDetails: Object,
 }
 
 const initState = {
@@ -144,6 +149,32 @@ function adminReducer(state: AdminReducer = initState, action: any) {
           paymentDetail: state.paymentMethods.paymentDetail 
         },
       };
+
+      case GET_CLEANER_DETAILS.SUCCEED:
+        return {
+          ...state,
+          cleanerDetails: action.data,
+        };
+
+      case GET_CUSTOMER_DETAILS.SUCCEED:
+        return {
+          ...state,
+          customers: {
+            ...state.customers,
+            customerDetail: action.data,
+          }
+        };
+      case EDIT_CLEANER.SUCCEED:
+        return {
+          ...state,
+          editCleanerState: "success",
+        };
+
+        case EDIT_CUSTOMER.SUCCEED:
+          return {
+            ...state,
+            editCustomerState: "success",
+          };
     default:
       return state;
   }

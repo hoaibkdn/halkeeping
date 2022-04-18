@@ -14,6 +14,12 @@ export const GET_ALL_CUSTOMERS = createActionType('GET_ALL_CUSTOMERS')
 export const DELETE_PAYMENT_METHOD = createActionType("DELETE_PAYMENT_METHOD");
 export const ADD_CLEANER = createActionType("ADD_CLEANER")
 
+export const GET_CLEANER_DETAILS = createActionType("GET_CLEANER_DETAILS");
+export const GET_CUSTOMER_DETAILS = createActionType("GET_CUSTOMER_DETAILS")
+
+export const EDIT_CLEANER = createActionType("EDIT_CLEANER")
+export const EDIT_CUSTOMER = createActionType("EDIT_CUSTOMER")
+
 export function login(data: Record<string, any>) {
   return async function (dispatch: Dispatch) {
     const response = await api.login(data);
@@ -199,6 +205,71 @@ export function addCleaner(data) {
     }
     dispatch({
       type: ADD_CLEANER.FAILED,
+    })
+    return { error: true, message: response.message }
+  }
+}
+
+export function getCleanerDetails(id) {
+  return async function(dispatch: Dispatch) {
+    const response = await api.getCleanerDetails(id)
+    if (response?.data?.error === 0) {
+      dispatch({
+        type: GET_CLEANER_DETAILS.SUCCEED,
+        data: response?.data?.cleaner,
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: GET_CLEANER_DETAILS.FAILED,
+    });
+    return { error: true, message: response.message };
+  };
+}
+
+export function getCustomerDetails(id) {
+  return async function(dispatch: Dispatch) {
+    const response = await api.getCustomerDetails(id)
+    if (response?.data?.error === 0) {
+      dispatch({
+        type: GET_CUSTOMER_DETAILS.SUCCEED,
+        data: response?.data?.customer,
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: GET_CUSTOMER_DETAILS.FAILED,
+    });
+    return { error: true, message: response.message };
+  };
+}
+
+export function editCleaner(data, id) {
+  return async function(dispatch: Dispatch) {
+    const response = await api.editCleaner(data, id)
+    if (response?.data?.error === 0) {
+      dispatch({
+        type: ADD_CLEANER.SUCCEED,
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: ADD_CLEANER.FAILED,
+    })
+    return { error: true, message: response.message }
+  }
+}
+export function editCustomer(data, id) {
+  return async function(dispatch: Dispatch) {
+    const response = await api.editCustomer(data, id)
+    if (response?.data?.error === 0) {
+      dispatch({
+        type: EDIT_CUSTOMER.SUCCEED,
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: EDIT_CUSTOMER.FAILED,
     })
     return { error: true, message: response.message }
   }

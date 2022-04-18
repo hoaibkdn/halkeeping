@@ -55,6 +55,9 @@ class CustomerList extends React.Component {
                 }
               : null
           )}
+          onRowClick={(data) => {
+            this.props.history.push(`/admin/customer/${data._id}`);
+          }}
         >
           <Table.Column width={70} align="right" fixed>
             <Table.HeaderCell>No</Table.HeaderCell>
