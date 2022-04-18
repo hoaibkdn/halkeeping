@@ -29,13 +29,9 @@ class CleanerList extends React.Component {
     Loading.hideLoading();
   };
 
-  getPagination = async (isPrev = true) => {
-    const offset = isPrev
-      ? this.props.offset - this.props.jobs.length - LIMIT
-      : this.props.offset;
-    const currentPage = isPrev
-      ? this.state.currentPage - 1
-      : this.state.currentPage + 1;
+  getPagination = async (numCurrentPage = 1) => {
+    const offset = numCurrentPage * LIMIT - LIMIT;
+    const currentPage = numCurrentPage;
     await this.loadData(offset, currentPage);
   };
 
