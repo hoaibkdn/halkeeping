@@ -22,6 +22,7 @@ import ArrowLeftLineIcon from "@rsuite/icons/ArrowLeftLine";
 import ArrowRightLineIcon from "@rsuite/icons/ArrowRightLine";
 import CustomerList from "./Customer/CustomerList";
 import AddCleaner from "./Cleaner/AddCleaner";
+import AddCuscomer from "./Customer/AddCuscomer";
 
 interface Props {
   adminRole: {
@@ -139,10 +140,12 @@ const Dashboard = (props: Props) => {
                 path="/admin"
                 render={() => <Redirect to={`/admin/dashboard`} />}
               />
+              <Route exact path="/admin/update-cleaner/:id" component={AddCleaner} />
               <Route exact path="/admin/job/:id" component={JobDetails} />
               <Route exact path="/admin/dashboard" component={JobList} />
               <Route exact path="/admin/cleaners" component={CleanerList} />
               <Route exact path="/admin/payment" component={PaymentMethod} />
+              <Route exact path="/admin/customer/:id" component={AddCuscomer} />
               <Route exact path="/admin/customers" component={CustomerList} />
               <Route exact path="/admin/add-cleaner" component={AddCleaner} />
             </Switch>
