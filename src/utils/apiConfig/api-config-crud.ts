@@ -38,18 +38,16 @@ export function configCRUD(baseUrl: string = BASE_URL) {
   }
 
   function formPut(url: string, data: Record<string, any>) {
-    // const bodyData = new FormData()
     const token = getToken()
 
     const requestOption = {
       method: "PUT",
       headers: {
         Authorization: token,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     }
-
-    // console.log('${BASE_URL}${url}', `${BASE_URL}${url}`, bodyData, data)
 
     return fetch(`${BASE_URL}${url}`, requestOption).then((response) =>
       response.json()
