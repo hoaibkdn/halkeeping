@@ -58,8 +58,16 @@ export namespace api {
     });
   }
 
-  export async function getAllCustomers() {
-    return await config.fetchJson(`/api/customer/get`);
+  export async function getAllCustomers({
+    offset,
+    limit,
+  }: {
+    offset: number;
+    limit: number;
+  }) {
+    return await config.fetchJson(
+      `/api/customer/get?offset=${offset}&limit=${limit}`
+    );
   }
 
   export async function deletePaymentMethod(id) {
@@ -82,18 +90,12 @@ export namespace api {
   }
 
   export async function editCleaner(cleaner, id) {
-    console.log('call api')
-    return await config.formPut(
-      `/api/cleaner/edit/${id}`,
-      cleaner,
-    );
+    console.log("call api");
+    return await config.formPut(`/api/cleaner/edit/${id}`, cleaner);
   }
 
   export async function editCustomer(custom, id) {
-    console.log('call api')
-    return await config.formPut(
-      `/api/customer/edit/${id}`,
-      custom,
-    );
+    console.log("call api");
+    return await config.formPut(`/api/customer/edit/${id}`, custom);
   }
 }

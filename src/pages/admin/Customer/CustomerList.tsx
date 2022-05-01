@@ -36,6 +36,7 @@ class CustomerList extends React.Component {
 
   render() {
     const { listIds, customerDetail, hasMore } = this.props;
+
     const { currentPage } = this.state;
     if (!listIds) {
       return null;
@@ -46,7 +47,7 @@ class CustomerList extends React.Component {
         {/* {isSucceed && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="error">{message}</Alert>} */}
         <Table
-          height={400}
+          height={600}
           data={listIds.map((item, index) =>
             item
               ? {
@@ -105,7 +106,6 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
   const customers = state.adminInfo?.customers || {};
-
   return {
     ...customers,
   };
