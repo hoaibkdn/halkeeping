@@ -172,19 +172,19 @@ const JobDetails: FC<any> = ({
       };
 
       setFormValue({
-        name: details.name,
-        phone: details.phone,
-        email: details.email,
-        address: details.address?.replace("\n", ""),
-        preferDate: new Date(details.preferDate?.split(" ")[0]),
-        cleaningTool: details.cleaningTool,
-        basicTool: details?.cleaningTool?.basic,
-        vacuum: details?.cleaningTool?.vacuum,
-        cleaningToolFee: JSON.parse(details.cleaningToolFee),
-        durationTime: details.durationTime,
-        pricePerHour: details.pricePerHour,
-        total: details.total,
-        note: details?.note,
+        name: details.name || "",
+        phone: details.phone || "",
+        email: details.email || "",
+        address: details.address?.replace("\n", "") || "",
+        preferDate: new Date(details.preferDate?.split(" ")[0]) || "",
+        cleaningTool: details.cleaningTool || "",
+        basicTool: details?.cleaningTool?.basic || "",
+        vacuum: details?.cleaningTool?.vacuum || "",
+        cleaningToolFee: JSON.parse(details.cleaningToolFee) || "",
+        durationTime: details.durationTime || "",
+        pricePerHour: details.pricePerHour || "",
+        total: details.total || "",
+        note: details?.note || "",
         numberOfCleaners: details?.numberOfCleaners || 1,
       });
 
@@ -376,6 +376,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
   const job = state.adminInfo.jobDetail;
+
   const cleaners = state.adminInfo?.cleaners?.list || [];
 
   return {
