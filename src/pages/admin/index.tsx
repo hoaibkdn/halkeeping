@@ -23,6 +23,8 @@ import ArrowRightLineIcon from "@rsuite/icons/ArrowRightLine";
 import CustomerList from "./Customer/CustomerList";
 import AddCleaner from "./Cleaner/AddCleaner";
 import AddCuscomer from "./Customer/AddCuscomer";
+import cleaningTool from "./CleaningTool";
+import WorkingHour from "./WorkingPrice";
 
 interface Props {
   adminRole: {
@@ -123,6 +125,19 @@ const Dashboard = (props: Props) => {
                 <Nav.Item eventKey="15">
                   <Link to="/admin/customers">Customers</Link>
                 </Nav.Item>
+                <Dropdown
+                  eventKey="16"
+                  trigger="hover"
+                  title={<Link to="/admin/cleaning-tool">Prices</Link>}
+                  placement="rightStart"
+                >
+                  <Dropdown.Item eventKey="16">
+                    <Link to="/admin/cleaning-tool">cleaning tool</Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item eventKey="16">
+                    <Link to="/admin/working-hour">Working hour</Link>
+                  </Dropdown.Item>
+                </Dropdown>
               </Nav>
             </Sidenav.Body>
           </Sidenav>
@@ -140,7 +155,11 @@ const Dashboard = (props: Props) => {
                 path="/admin"
                 render={() => <Redirect to={`/admin/dashboard`} />}
               />
-              <Route exact path="/admin/update-cleaner/:id" component={AddCleaner} />
+              <Route
+                exact
+                path="/admin/update-cleaner/:id"
+                component={AddCleaner}
+              />
               <Route exact path="/admin/job/:id" component={JobDetails} />
               <Route exact path="/admin/dashboard" component={JobList} />
               <Route exact path="/admin/cleaners" component={CleanerList} />
@@ -148,6 +167,12 @@ const Dashboard = (props: Props) => {
               <Route exact path="/admin/customer/:id" component={AddCuscomer} />
               <Route exact path="/admin/customers" component={CustomerList} />
               <Route exact path="/admin/add-cleaner" component={AddCleaner} />
+              <Route
+                exact
+                path="/admin/cleaning-tool"
+                component={cleaningTool}
+              />
+              <Route exact path="/admin/working-hour" component={WorkingHour} />
             </Switch>
             {/* <Loader /> */}
           </Content>

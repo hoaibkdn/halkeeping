@@ -90,12 +90,19 @@ export namespace api {
   }
 
   export async function editCleaner(cleaner, id) {
-    console.log("call api");
     return await config.formPut(`/api/cleaner/edit/${id}`, cleaner);
   }
 
   export async function editCustomer(custom, id) {
-    console.log("call api");
     return await config.formPut(`/api/customer/edit/${id}`, custom);
   }
+
+  export async function getCleaningTool() {
+    return await config.fetchJson(`/api/cleaning-tool/get`);
+  }
+
+  export async function getPrice() {
+    return await config.fetchJson(`/api/working-hour/get`);
+  }
+
 }
