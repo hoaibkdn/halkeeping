@@ -19,6 +19,8 @@ export const GET_CUSTOMER_DETAILS = createActionType("GET_CUSTOMER_DETAILS")
 
 export const EDIT_CLEANER = createActionType("EDIT_CLEANER")
 export const EDIT_CUSTOMER = createActionType("EDIT_CUSTOMER")
+export const GET_CLEANING_TOOL = createActionType("GET_CLEANING_TOOL")
+export const GET_WORKING_PRICE = createActionType("GET_WORKING_PRICE")
 
 export function login(data: Record<string, any>) {
   return async function (dispatch: Dispatch) {
@@ -273,4 +275,41 @@ export function editCustomer(data, id) {
     })
     return { error: true, message: response.message }
   }
+}
+
+export function getCleaningTool() {
+  return async function(dispatch: Dispatch) {
+    const response = await api.getCleaningTool()
+    if (response?.cleaningTool) {
+      dispatch({
+        type: GET_CLEANING_TOOL.SUCCEED,
+        cleaningTool: response?.cleaningTool 
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: GET_CLEANING_TOOL.FAILED,
+    })
+    return { error: true, message: response.message }
+  } 
+}
+
+export function getWorkingPrice() {
+  return async function(dispatch: Dispatch) {
+    const response = await api.getPrice()
+    console.log({
+      response
+    })
+    if (response?.workingHour) {
+      dispatch({
+        type: GET_WORKING_PRICE.SUCCEED,
+        workingHour: response?.workingHour 
+      })
+      return { error: false }
+    }
+    dispatch({
+      type: GET_WORKING_PRICE.FAILED,
+    })
+    return { error: true, message: response.message }
+  } 
 }

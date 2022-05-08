@@ -13,6 +13,8 @@ import {
   EDIT_CLEANER,
   EDIT_CUSTOMER,
   GET_CUSTOMER_DETAILS,
+  GET_CLEANING_TOOL,
+  GET_WORKING_PRICE,
 } from "./actions";
 import getJobsList, {
   transformPaymentMethods,
@@ -37,7 +39,8 @@ export interface AdminReducer {
     hasMore: boolean;
     offset: number;
   };
-  cleanerDetails: Object,
+  cleanerDetails: Object;
+  workingHour?: Object;
 }
 
 const initState = {
@@ -67,9 +70,6 @@ const initState = {
 function adminReducer(state: AdminReducer = initState, action: any) {
   switch (action.type) {
     case LOGIN.SUCCEED:
-      console.log({
-        adminData: action.data,
-      });
       return {
         ...state,
         adminAuth: action.data,
@@ -141,40 +141,50 @@ function adminReducer(state: AdminReducer = initState, action: any) {
         (item) => item !== action.id
       );
 
-      delete state.paymentMethods.paymentDetail[action.id]
+      delete state.paymentMethods.paymentDetail[action.id];
       return {
         ...state,
         paymentMethods: {
           listIds: paymentMethodsIds,
-          paymentDetail: state.paymentMethods.paymentDetail 
+          paymentDetail: state.paymentMethods.paymentDetail,
         },
       };
 
-      case GET_CLEANER_DETAILS.SUCCEED:
-        return {
-          ...state,
-          cleanerDetails: action.data,
-        };
+    case GET_CLEANER_DETAILS.SUCCEED:
+      return {
+        ...state,
+        cleanerDetails: action.data,
+      };
 
-      case GET_CUSTOMER_DETAILS.SUCCEED:
-        return {
-          ...state,
-          customers: {
-            ...state.customers,
-            customerDetail: action.data,
-          }
-        };
-      case EDIT_CLEANER.SUCCEED:
-        return {
-          ...state,
-          editCleanerState: "success",
-        };
+    case GET_CUSTOMER_DETAILS.SUCCEED:
+      return {
+        ...state,
+        customers: {
+          ...state.customers,
+          customerDetail: action.data,
+        },
+      };
+    case EDIT_CLEANER.SUCCEED:
+      return {
+        ...state,
+        editCleanerState: "success",
+      };
 
-        case EDIT_CUSTOMER.SUCCEED:
-          return {
-            ...state,
-            editCustomerState: "success",
-          };
+    case EDIT_CUSTOMER.SUCCEED:
+      return {
+        ...state,
+        editCustomerState: "success",
+      };
+    case GET_CLEANING_TOOL.SUCCEED:
+      return {
+        ...state,
+        cleaningTool: action.cleaningTool,
+      };
+    case GET_WORKING_PRICE.SUCCEED:
+      return {
+        ...state,
+        workingHour: action.workingHour,
+      };
     default:
       return state;
   }
