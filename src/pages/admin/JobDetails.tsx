@@ -188,7 +188,7 @@ const JobDetails: FC<any> = ({
         numberOfCleaners: details?.numberOfCleaners || 1,
       });
 
-      setSignedCleaners(details.cleanerId);
+      setSignedCleaners(details.cleanerId || []);
     }
 
     if (cleaners) {
