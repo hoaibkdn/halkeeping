@@ -129,6 +129,7 @@ const Container = styled.div`
   }
 `;
 
+const fbLink = "https://www.facebook.com/donvesinhdiabandanang";
 const Footer: FC<FooterProps> = ({}) => {
   useEffect(() => {}, []);
 
@@ -139,25 +140,22 @@ const Footer: FC<FooterProps> = ({}) => {
         <Left>
           <Name>Halkeeping</Name>
           <FBPage
-            className="fb-page"
-            data-href="https://www.facebook.com/halkeepingdanang/"
-            data-tabs="timeline"
+            className='fb-page'
+            data-href={fbLink}
+            data-tabs='timeline'
             data-width={`${
               window.innerWidth > 1024 || window.innerWidth < 768
                 ? "270"
                 : "180"
             }`}
-            data-height="160"
-            data-small-header="false"
-            data-adapt-container-width="false"
-            data-hide-cover="false"
-            data-show-facepile="true"
+            data-height='160'
+            data-small-header='false'
+            data-adapt-container-width='false'
+            data-hide-cover='false'
+            data-show-facepile='true'
           >
-            <blockquote
-              cite="https://www.facebook.com/halkeepingdanang/"
-              className="fb-xfbml-parse-ignore"
-            >
-              <a href="https://www.facebook.com/halkeepingdanang/">Facebook</a>
+            <blockquote cite={fbLink} className='fb-xfbml-parse-ignore'>
+              <a href={fbLink}>Facebook</a>
             </blockquote>
           </FBPage>
         </Left>
@@ -165,11 +163,11 @@ const Footer: FC<FooterProps> = ({}) => {
           <Contact>Thông tin Halkeeping</Contact>
           <ContactWrapper>
             <ContactItem>
-              Địa chỉ: 86 Phan Phu Tiên, Thanh Khê, Đà Nẵng
+              Địa chỉ: 94/74 Đà Sơn 2, Liên Chiểu, Đà Nẵng
               {/* <ContactText>{text}</ContactText> */}
             </ContactItem>
             <ContactItem>
-              Số điện thoai / zalo: 0785359038
+              Số điện thoai / zalo: 078.5359.038
               {/* <ContactText>{text}</ContactText> */}
             </ContactItem>
             <ContactItem>
@@ -180,7 +178,7 @@ const Footer: FC<FooterProps> = ({}) => {
         <Right>
           <Contact>Liên hệ chúng tôi</Contact>
           <ContactItem>Email: halStorm13@gmail.com</ContactItem>
-          <ContactItem>website: https://halkeeping.web.app/</ContactItem>
+          <ContactItem>website: https://halkeeping.com/</ContactItem>
         </Right>
       </Container>
     </Wrapper>

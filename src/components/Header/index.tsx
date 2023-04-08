@@ -1,9 +1,9 @@
 // @ts-nocheck
-import React, { FC, useState } from "react"
-import styled from "styled-components"
-import Navigation from "../Navigation"
+import React, { FC, useState } from "react";
+import styled from "styled-components";
+import Navigation from "../Navigation";
 
-import logo from "../../assets/images/logo.png"
+import logo from "../../assets/images/logo.png";
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -12,7 +12,7 @@ const HeaderWrapper = styled.header`
   height: auto;
   box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
   z-index: 101;
-  height: 60px;
+  height: 70px;
   background-color: white;
 
   & > div {
@@ -28,7 +28,7 @@ const HeaderWrapper = styled.header`
       max-width: 70%;
     }
   }
-`
+`;
 
 const Logo = styled.h1`
   margin: 0;
@@ -45,7 +45,17 @@ const Logo = styled.h1`
     margin: auto;
     object-fit: contain;
   }
-`
+
+  & > span {
+    padding-left: 20px;
+    font-size: 30px;
+    padding-top: 15px;
+    & > a {
+      text-decoration: none;
+      color: #042c41;
+    }
+  }
+`;
 
 const ToggleIcon = styled.div`
   font-size: 18px;
@@ -84,37 +94,36 @@ const ToggleIcon = styled.div`
   @media (min-width: 640px) {
     display: none;
   }
-`
+`;
 
 const Header = () => {
-  const [isOpened, setIsOpened] = useState(false)
-  const nav = [{name: "Về chúng tôi", url: '/about-us'}, {name: "Liên hệ", url: "/contact"}]
+  const [isOpened, setIsOpened] = useState(false);
+  const nav = [{ name: "Liên hệ", url: "/contact" }];
 
   return (
     <>
       <HeaderWrapper>
         <div>
-            <Logo>
-              <a href="/">
-                <img src={logo} alt="logo" />
-              </a>
-            </Logo>
-          
+          <Logo>
+            <a href='/'>
+              <img src={logo} alt='logo' />
+            </a>
+            <span>
+              <a href='/'>Halkeeping</a>
+            </span>
+          </Logo>
+
           <ToggleIcon
             className={`${isOpened ? "opened" : ""}`}
             onClick={() => setIsOpened(!isOpened)}
           >
             <span></span>
           </ToggleIcon>
-          <Navigation
-            nav={nav}
-            active='home'
-            isOpened={isOpened}
-          />
+          <Navigation nav={nav} active='home' isOpened={isOpened} />
         </div>
       </HeaderWrapper>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

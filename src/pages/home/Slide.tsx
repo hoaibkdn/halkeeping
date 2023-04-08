@@ -3,12 +3,16 @@ import styled from "styled-components";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import slide1 from "../../assets/images/slide1.png";
-import slide2 from "../../assets/images/slide2.png";
-import slide3 from "../../assets/images/slide3.png";
-import slide4 from "../../assets/images/slide4.png";
-import slide5 from "../../assets/images/slide5.png";
-import slide6 from "../../assets/images/slide6.png";
+import slide1 from "../../assets/images/slide/before_1.jpg";
+import slide2 from "../../assets/images/slide/after_1.jpg";
+import slide3 from "../../assets/images/slide/before_2.jpg";
+import slide4 from "../../assets/images/slide/after_2.jpg";
+import slide5 from "../../assets/images/slide/before_4.jpg";
+import slide6 from "../../assets/images/slide/after_4.jpg";
+import slide7 from "../../assets/images/slide/before_5.jpg";
+import slide8 from "../../assets/images/slide/after_5.jpg";
+import slide9 from "../../assets/images/slide/before_6.jpg";
+import slide10 from "../../assets/images/slide/after_6.jpg";
 
 const Section = styled.section`
   & > div {
@@ -25,12 +29,12 @@ const Section = styled.section`
 
   & img {
     width: 100%;
-    height: 295px;
+    height: 450px;
     object-fit: cover;
   }
 
   & .image-item {
-    padding-right: 20px;
+    padding-right: 10px;
   }
 `;
 
@@ -52,14 +56,25 @@ const Slide = () => {
       paritialVisibilityGutter: 30,
     },
   };
-  const image = [slide1, slide2, slide3, slide4, slide5, slide6];
+  const image = [
+    slide1,
+    slide2,
+    slide3,
+    slide4,
+    slide5,
+    slide6,
+    slide7,
+    slide8,
+    slide9,
+    slide10,
+  ];
 
   return (
     <Section>
       <div>
         <h4>HALKEEPING CÂN HẾT MỌI RÁC BẨN</h4>
 
-        <Carousel responsive={responsive} itemClass="image-item">
+        <Carousel responsive={responsive} itemClass='image-item'>
           {image.map((item) => (
             <img src={item} />
           ))}
