@@ -2,7 +2,7 @@
   "name": "halkeeping",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://halkeeping.com",
+  "homepage": "http://www.halkeeping.com/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
