@@ -81,10 +81,11 @@ const Chatboxes = ({
       <a
         href={`https://zalo.me/${zaloNumber}`}
         target="_blank"
+        rel="noreferrer"
         style={{ zIndex: "103" }}
       >
         <Zalo>
-          <img src={zalo} />
+          <img src={zalo} alt="zalo" />
         </Zalo>
       </a>
     </>

@@ -1,11 +1,13 @@
-// @ts-nocheck
-import React from "react";
-import { connect } from "react-redux";
-import { getWorkingPrice } from "./../actions";
-import { Table, Pagination } from "rsuite";
-import Loading from "./../../../components/Loading";
+/** @format */
 
-const LIMIT = 10;
+// @ts-nocheck
+import React from 'react';
+import { connect } from 'react-redux';
+import { getWorkingPrice } from './../actions';
+import { Table } from 'rsuite';
+import Loading from './../../../components/Loading';
+
+// const LIMIT = 10;
 class WorkingHour extends React.Component {
   componentDidMount() {
     this.loadData(0, 1);
@@ -22,13 +24,13 @@ class WorkingHour extends React.Component {
     const workingTypeKeys = Object.keys(workingHour) || [];
     return (
       <>
-        <h3 style={{ margin: "30px 0px 30px 40px" }}>Working hour price</h3>
+        <h3 style={{ margin: '30px 0px 30px 40px' }}>Working hour price</h3>
         {/* {isSucceed && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="error">{message}</Alert>} */}
         <Table
           height={600}
           data={workingTypeKeys.reduce((total, item) => {
-            if (item === "_id") {
+            if (item === '_id') {
               return total;
             }
             total.push({
@@ -38,24 +40,23 @@ class WorkingHour extends React.Component {
               remove: <button>Delete</button>,
             });
             return total;
-          }, [])}
-        >
-          <Table.Column width={130} align="left" fixed>
+          }, [])}>
+          <Table.Column width={130} align='left' fixed>
             <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.Cell dataKey="name" />
+            <Table.Cell dataKey='name' />
           </Table.Column>
 
           <Table.Column width={120} fixed>
             <Table.HeaderCell>Price</Table.HeaderCell>
-            <Table.Cell dataKey="price" />
+            <Table.Cell dataKey='price' />
           </Table.Column>
           <Table.Column width={120} fixed>
             <Table.HeaderCell>Edit</Table.HeaderCell>
-            <Table.Cell dataKey="edit" />
+            <Table.Cell dataKey='edit' />
           </Table.Column>
           <Table.Column width={120} fixed>
             <Table.HeaderCell>Remove</Table.HeaderCell>
-            <Table.Cell dataKey="remove" />
+            <Table.Cell dataKey='remove' />
           </Table.Column>
         </Table>
       </>

@@ -1,18 +1,20 @@
-import styled from "styled-components";
+/** @format */
 
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
+import styled from 'styled-components';
 
-import slide1 from "../../assets/images/slide/before_1.jpg";
-import slide2 from "../../assets/images/slide/after_1.jpg";
-import slide3 from "../../assets/images/slide/before_2.jpg";
-import slide4 from "../../assets/images/slide/after_2.jpg";
-import slide5 from "../../assets/images/slide/before_4.jpg";
-import slide6 from "../../assets/images/slide/after_4.jpg";
-import slide7 from "../../assets/images/slide/before_5.jpg";
-import slide8 from "../../assets/images/slide/after_5.jpg";
-import slide9 from "../../assets/images/slide/before_6.jpg";
-import slide10 from "../../assets/images/slide/after_6.jpg";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+
+import slide1 from '../../assets/images/slide/before_1.jpg';
+import slide2 from '../../assets/images/slide/after_1.jpg';
+import slide3 from '../../assets/images/slide/before_2.jpg';
+import slide4 from '../../assets/images/slide/after_2.jpg';
+import slide5 from '../../assets/images/slide/before_4.jpg';
+import slide6 from '../../assets/images/slide/after_4.jpg';
+import slide7 from '../../assets/images/slide/before_5.jpg';
+import slide8 from '../../assets/images/slide/after_5.jpg';
+import slide9 from '../../assets/images/slide/before_6.jpg';
+import slide10 from '../../assets/images/slide/after_6.jpg';
 
 const Section = styled.section`
   & > div {
@@ -76,7 +78,7 @@ const Slide = () => {
 
         <Carousel responsive={responsive} itemClass='image-item'>
           {image.map((item) => (
-            <img src={item} />
+            <img src={item} alt='gabage' />
           ))}
         </Carousel>
       </div>

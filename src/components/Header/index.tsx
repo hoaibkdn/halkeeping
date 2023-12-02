@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Navigation from "../Navigation";
 

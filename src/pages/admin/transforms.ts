@@ -43,7 +43,7 @@ function transformPaymentMethods(allPaymentMethods: Array<{}>) {
       listIds: Array<string>,
       paymentDetail: Object
   }, method) => {
-      total.listIds.push(method._id),
+      total.listIds.push(method._id)
       total.paymentDetail[method._id] = method
       return total
   }, response)

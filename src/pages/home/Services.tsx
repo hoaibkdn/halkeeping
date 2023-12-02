@@ -1,10 +1,12 @@
-import styled from "styled-components";
+/** @format */
 
-import home from "../../assets/images/home.png";
-import company from "../../assets/images/company.png";
-import roller_rush from "../../assets/images/roller-brush.png";
-import people from "../../assets/images/people.png";
-import calendar from "../../assets/images/calendar.png";
+import styled from 'styled-components';
+
+import home from '../../assets/images/home.png';
+import company from '../../assets/images/company.png';
+import roller_rush from '../../assets/images/roller-brush.png';
+import people from '../../assets/images/people.png';
+import calendar from '../../assets/images/calendar.png';
 
 const Section = styled.section`
   & > div {
@@ -24,7 +26,7 @@ const Section = styled.section`
 
       & > div {
         width: 100%;
-        
+
         justify-content: flex-end;
         & > img {
           width: 80%;
@@ -35,7 +37,7 @@ const Section = styled.section`
         @media (min-width: 768px) {
           width: 45%;
           display: flex;
-        } 
+        }
       }
 
       & > .services {
@@ -58,7 +60,6 @@ const Service = styled.div`
   padding: 10px 30px;
   text-align: center;
 
-
   & > img {
     width: auto;
     height: auto;
@@ -75,13 +76,9 @@ const Service = styled.div`
     color: #757575;
     font-weight: 300;
   }
-
-  
 `;
 
-const SerViceMainImg = styled.div`
-  
-`
+const SerViceMainImg = styled.div``;
 
 const Services = () => {
   return (
@@ -89,9 +86,9 @@ const Services = () => {
       <div>
         <h4>HALKEEPING CUNG CẤP DICH VỤ GÌ</h4>
         <div>
-          <div className="services">
+          <div className='services'>
             <Service>
-              <img src={home} />
+              <img src={home} alt='home' />
               <h4>Dọn nhà ở, căn hộ theo giờ</h4>
               <p>
                 Bạn đi làm cả tuần và muốn có người dọn vệ sinh nhà ở giúp,
@@ -99,7 +96,7 @@ const Services = () => {
               </p>
             </Service>
             <Service>
-              <img src={company} />
+              <img src={company} alt='company' />
               <h4>Dọn văn phòng công ty</h4>
               <p>
                 Halkeeping có lượng nhân viên kinh nghiệm trong việc dọn văn
@@ -107,7 +104,7 @@ const Services = () => {
               </p>
             </Service>
             <Service>
-              <img src={calendar} />
+              <img src={calendar} alt='calendar' />
               <h4>Dọn định kỳ theo tháng</h4>
               <p>
                 Dọn định kỳ giúp tiết kiệm chi phí và có nhân viên cố định, linh
@@ -115,7 +112,7 @@ const Services = () => {
               </p>
             </Service>
             <Service>
-              <img src={roller_rush} />
+              <img src={roller_rush} alt='roller' />
               <h4>Tổng vệ sinh, nhà sau xây dựng</h4>
               <p>
                 Tổng vệ sinh cho nhà cũ, nhà bẩn, đảm bảo sạch sẽ với giá thích
@@ -125,7 +122,7 @@ const Services = () => {
             </Service>
           </div>
           <SerViceMainImg>
-            <img src={people} />
+            <img src={people} alt='people' />
           </SerViceMainImg>
         </div>
       </div>

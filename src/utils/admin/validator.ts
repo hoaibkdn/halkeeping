@@ -28,6 +28,7 @@ export function getPhoneError(phone: FormValidation) {
     return ""
   }
 
+  // eslint-disable-next-line no-useless-escape
   const phoneFormat = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
   const isValidNumber = phoneFormat.test(String(phone.value).toLowerCase())
   if (!isValidNumber) {

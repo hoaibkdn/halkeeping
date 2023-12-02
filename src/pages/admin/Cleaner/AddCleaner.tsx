@@ -5,7 +5,7 @@ import {
   Button,
   Toggle,
 } from 'rsuite';
-import { useRef, useEffect, useState, FC, useCallback } from 'react';
+import { useRef, useEffect, useState, FC } from 'react';
 import Field from '../../../components/Form/Field';
 import { asyncCheckPhone } from '../../../components/Form/form';
 import { connect } from 'react-redux';
@@ -72,7 +72,7 @@ const AddCleanerForm: FC<any> = ({ addCleaner, getCleanerDetails, cleanerDetails
       getCleanerDetails(id)
     }
     return () => {};
-  }, [id]);
+  }, [id, getCleanerDetails]);
 
   useEffect(() => {
     if(id && cleanerDetails) {

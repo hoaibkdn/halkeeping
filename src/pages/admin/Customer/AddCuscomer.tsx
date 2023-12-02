@@ -3,16 +3,11 @@ import {
   Schema,
   ButtonToolbar,
   Button,
-  Row,
-  SelectPicker,
-  Toggle,
 } from 'rsuite';
-import { useRef, useEffect, useState, FC, useCallback } from 'react';
+import { useRef, useEffect, useState, FC } from 'react';
 import Field from '../../../components/Form/Field';
 import { asyncCheckPhone } from '../../../components/Form/form';
-import { getProvinces } from '../../redux/actions';
 import { connect } from 'react-redux';
-import { Label } from '../../../components/Form/style';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { addCleaner, getCustomerDetails, editCustomer } from '../actions';

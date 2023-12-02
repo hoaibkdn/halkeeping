@@ -1,7 +1,9 @@
-import styled from "styled-components";
-import hard_working from "../../assets/images/hard-working.png";
-import consultant from "../../assets/images/consultant.png";
-import listen_cus from "../../assets/images/listen-to-custumer.png";
+/** @format */
+
+import styled from 'styled-components';
+import hard_working from '../../assets/images/hard-working.png';
+import consultant from '../../assets/images/consultant.png';
+import listen_cus from '../../assets/images/listen-to-custumer.png';
 
 const Section = styled.section`
   & > div {
@@ -51,17 +53,17 @@ const Advantages = () => {
     <Section>
       <div>
         <h4>TẠI SAO NÊN CHỌN HALKEEPING</h4>
-        <div className="services">
+        <div className='services'>
           <Advantage>
-            <img src={hard_working} />
+            <img src={hard_working} alt='hard working' />
             <p>Nhân viên chăm chỉ</p>
           </Advantage>
           <Advantage>
-            <img src={listen_cus} />
+            <img src={listen_cus} alt='listen customer' />
             <p>Luôn lắng nghe khách hàng</p>
           </Advantage>
           <Advantage>
-            <img src={consultant} />
+            <img src={consultant} alt='consultant' />
             <p>Tư vấn tận tâm</p>
           </Advantage>
         </div>

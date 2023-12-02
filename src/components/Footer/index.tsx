@@ -82,7 +82,7 @@ const ContactItem = styled.li`
   font-weight: 300;
 `;
 
-const ContactText = styled.span`
+export const ContactText = styled.span`
   margin-left: 5px;
 `;
 
@@ -93,11 +93,11 @@ const Contact = styled.strong`
   padding-top: 10px;
 `;
 
-const NetworkIcons = styled.div`
+export const NetworkIcons = styled.div`
   display: flex;
 `;
 
-const LinkIcon = styled.a`
+export const LinkIcon = styled.a`
   margin-right: 10px;
 `;
 
@@ -106,7 +106,7 @@ interface IconProps {
   height: string;
 }
 
-const Icon = styled.img`
+export const Icon = styled.img`
   width: ${(props: IconProps) => props.width};
   height: ${(props: IconProps) => props.height};
   margin-top: -4px;
@@ -130,7 +130,7 @@ const Container = styled.div`
 `;
 
 const fbLink = "https://www.facebook.com/donvesinhdiabandanang";
-const Footer: FC<FooterProps> = ({}) => {
+const Footer: FC<FooterProps> = () => {
   useEffect(() => {}, []);
 
   return (

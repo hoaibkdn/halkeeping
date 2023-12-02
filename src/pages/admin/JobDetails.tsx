@@ -2,23 +2,18 @@
 import React, { FC, useState, useEffect } from "react";
 import styled from "styled-components";
 import Field from "../../components/Form/Field";
-import { Label, Textarea } from "../../components/Form/style";
+import { Textarea } from "../../components/Form/style";
 import { connect } from "react-redux";
 import { PublicReducer } from "../redux/reducer";
 import {
   Form,
-  Schema,
   Button,
-  SelectPicker,
   DatePicker,
   Checkbox,
   CheckboxGroup,
   Modal,
   CheckPicker,
 } from "rsuite";
-import moment from "moment";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import { getJobDetails, getAllCleaners, editJob } from "./actions";
 
 const Container = styled.div`
@@ -33,7 +28,7 @@ const Title = styled.h6`
   font-weight: 650;
 `;
 
-const Note = styled.p`
+export const Note = styled.p`
   color: #b29700;
   font-size: 17px;
   margin-bottom: 20px;
@@ -50,7 +45,7 @@ const Row = styled.div`
   justify-content: space-between;
 `;
 
-const optionsPay = [
+export const optionsPay = [
   {
     value: "Tiền mặt",
     label: "Tiền mặt",
@@ -61,7 +56,7 @@ const optionsPay = [
   },
 ];
 
-const optionsHours = [
+export const optionsHours = [
   {
     value: 1,
     label: "1 Tiếng",
@@ -96,7 +91,7 @@ const optionsHours = [
   },
 ];
 
-const optionsCleaners = [
+export const optionsCleaners = [
   {
     value: 1,
     label: "1 Người",
@@ -115,7 +110,7 @@ const optionsCleaners = [
   },
 ];
 
-const optionsMinutes = [
+export const optionsMinutes = [
   {
     value: 10,
     label: "10 Phút",
@@ -142,7 +137,7 @@ interface State {
   publicPages: PublicReducer;
 }
 
-const JobDetails: FC<any> = ({
+const JobDetails: FC<any, State> = ({
   job,
   getJobDetails,
   cleaners,
@@ -162,7 +157,7 @@ const JobDetails: FC<any> = ({
       limit: 10,
       offset: 0,
     });
-  }, []);
+  }, [getJobDetails, getAllCleaners, id]);
 
   useEffect(() => {
     if (job) {

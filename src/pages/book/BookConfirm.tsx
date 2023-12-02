@@ -1,15 +1,17 @@
-import styled from "styled-components";
-import { useHistory } from "react-router-dom";
-import { PublicReducer } from "../redux/reducer";
-import { connect } from "react-redux";
+/** @format */
 
-import { createJob } from "../redux/actions";
-import { useState } from "react";
-import { useEffect } from "react";
-import moment from "moment";
-import { Modal, Button, Loader } from "rsuite";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+import { PublicReducer } from '../redux/reducer';
+import { connect } from 'react-redux';
+
+import { createJob } from '../redux/actions';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import moment from 'moment';
+import { Modal, Button, Loader } from 'rsuite';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 interface State {
   publicPages: PublicReducer;
@@ -54,25 +56,25 @@ const BookConfirm = (props: Props) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const handleClose = () => setIsSuccess(false);
   const history = useHistory();
+  const data = props.data || {};
 
   useEffect(() => {
     if (!data?.date || !data?.time || !data?.hour) {
-      history.push("/book");
+      history.push('/book');
     }
-  }, [isSuccess]);
+  }, [data?.date, data?.time, data?.hour, isSuccess, history]);
 
-  const data = props.data || {};
-  const date = moment(data.date).format("YYYY-MM-DD");
-  const time = moment(data.time).format("hh:mm");
-  let countTool = 0;
-  let tool = "";
+  const date = moment(data.date).format('YYYY-MM-DD');
+  const time = moment(data.time).format('hh:mm');
+  // let countTool = 0;
+  let tool = '';
   switch (true) {
     case data.tool:
-      countTool += 30000;
+      // countTool += 30000;
       tool += `Có mang dụ cụ cơ bản (+ 30.000)`;
       break;
     case data.cleanerTool:
-      countTool += 30000;
+      // countTool += 30000;
       tool += `Máy hút bụi vừa (hút thảm hoặc ghế sofa, nệm) - 30.000 vnd`;
       break;
   }
@@ -88,10 +90,10 @@ const BookConfirm = (props: Props) => {
       startWorkingTime: time,
       durationTime: (data.hour || 0) * 60 + (data.minutes || 0),
       cleaningTool: {
-        basic: data?.tool?.includes("toolBasic"),
-        vacuum: data?.tool?.includes("toolCleaner"),
+        basic: data?.tool?.includes('toolBasic'),
+        vacuum: data?.tool?.includes('toolCleaner'),
       },
-      unit: "vnd",
+      unit: 'vnd',
       note: data.note,
       numberOfCleaners: data.numberOfCleaners || 1,
       payMethod: data?.payMethod,
@@ -110,23 +112,22 @@ const BookConfirm = (props: Props) => {
     <>
       <Header />
       <Modal open={isSuccess} onClose={handleClose}>
-        <Modal.Header style={{ display: "flex", justifyContent: "center" }}>
-          <Modal.Title style={{ textAlign: "center", width: "80%" }}>
+        <Modal.Header style={{ display: 'flex', justifyContent: 'center' }}>
+          <Modal.Title style={{ textAlign: 'center', width: '80%' }}>
             Halkeeping xin chân thành cảm ơn quý khách đã tin cậy sử dụng dịch
             vụ của chúng tôi!!
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ textAlign: "center" }}>
+        <Modal.Body style={{ textAlign: 'center' }}>
           Chúng tôi sẽ sớm liên hệ để hỗ trợ thông tin chi tiết.
         </Modal.Body>
-        <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
+        <Modal.Footer style={{ display: 'flex', justifyContent: 'center' }}>
           <Button
-            appearance="primary"
-            style={{ width: "100px" }}
+            appearance='primary'
+            style={{ width: '100px' }}
             onClick={() => {
-              history.push("/");
-            }}
-          >
+              history.push('/');
+            }}>
             OK
           </Button>
         </Modal.Footer>
@@ -159,17 +160,17 @@ const BookConfirm = (props: Props) => {
             <Text>{tool}</Text>
           </Row>
         ) : (
-          ""
+          ''
         )}
         {data.note ? (
-          <div style={{ marginBottom: "20px" }}>
+          <div style={{ marginBottom: '20px' }}>
             <Label>Dặn dò thêm</Label>
-            <div style={{ marginLeft: "30px" }}>
-              <Text style={{ display: "block" }}>{data.note}</Text>
+            <div style={{ marginLeft: '30px' }}>
+              <Text style={{ display: 'block' }}>{data.note}</Text>
             </div>
           </div>
         ) : (
-          ""
+          ''
         )}
         <Row>
           <Label>Thanh toán</Label>
@@ -178,41 +179,38 @@ const BookConfirm = (props: Props) => {
 
         <div
           style={{
-            display: "flex",
-            marginBottom: "30px",
-            marginTop: "40px",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <div style={{ width: "40%" }}>
+            display: 'flex',
+            marginBottom: '30px',
+            marginTop: '40px',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <div style={{ width: '40%' }}>
             <Label style={{ fontWeight: 700 }}>Tổng</Label>
-            <Text style={{ color: "#01527C", fontWeight: 700 }}>
-              {data?.countPay?.toLocaleString("vi")} đồng
+            <Text style={{ color: '#01527C', fontWeight: 700 }}>
+              {data?.countPay?.toLocaleString('vi')} đồng
             </Text>
             <p
               style={{
-                fontSize: "16px",
-                color: "#606060",
-                fontStyle: "italic",
-              }}
-            >
+                fontSize: '16px',
+                color: '#606060',
+                fontStyle: 'italic',
+              }}>
               Chúng tôi sẽ xác nhận đơn đặt dọn vệ sinh của bạn qua email và
               điện thoại
             </p>
           </div>
           <Button
             style={{
-              borderColor: "#042C41",
-              backgroundColor: "#042C41",
-              color: "#fff",
-              width: "150px",
-              height: "60px",
+              borderColor: '#042C41',
+              backgroundColor: '#042C41',
+              color: '#fff',
+              width: '150px',
+              height: '60px',
             }}
             disabled={processing}
-            onClick={onBook}
-          >
-            {processing ? <Loader /> : "Đặt ngay"}
+            onClick={onBook}>
+            {processing ? <Loader /> : 'Đặt ngay'}
           </Button>
         </div>
       </Container>

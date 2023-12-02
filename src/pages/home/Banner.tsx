@@ -1,7 +1,9 @@
+/** @format */
+
 // @ts-nocheck
-import React, { FC } from "react";
-import styled from "styled-components";
-import banner from "../../assets/images/banner_v2.png";
+import React, { FC } from 'react';
+import styled from 'styled-components';
+import banner from '../../assets/images/banner_v2.png';
 
 export const BannerWrapper = styled.section`
   position: relative;
@@ -81,7 +83,7 @@ export const BannerContent = styled.div`
   }
 `;
 
-const Banner: FC<BannerProps> = ({}) => {
+const Banner: FC<BannerProps> = () => {
   return (
     <BannerWrapper>
       <BannerContent>

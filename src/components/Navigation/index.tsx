@@ -3,9 +3,9 @@ import React, { FC } from "react"
 import styled from "styled-components"
 import Item from "./Item"
 
-import fb from "../../assets/images/icons/facebook.png"
-import yout from "../../assets/images/icons/youtube.png"
-import ins from "../../assets/images/icons/instagram.png"
+// import fb from "../../assets/images/icons/facebook.png"
+// import yout from "../../assets/images/icons/youtube.png"
+// import ins from "../../assets/images/icons/instagram.png"
 import { Link } from "react-router-dom"
 
 const NavList = styled.ul`

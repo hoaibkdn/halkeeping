@@ -1,15 +1,17 @@
-import Banner from "./Banner";
-import Services from "./Services";
-import Advantages from "./Advantages";
-import styled from "styled-components";
-import Feedbacks from "./Feedbacks";
-import Slide from "./Slide";
-import btn_background from "../../assets/images/btn-background.png";
-import { connect } from "react-redux";
-import { resetBook } from "../redux/actions";
-import { FC, useEffect } from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+/** @format */
+
+import Banner from './Banner';
+import Services from './Services';
+import Advantages from './Advantages';
+import styled from 'styled-components';
+import Feedbacks from './Feedbacks';
+import Slide from './Slide';
+import btn_background from '../../assets/images/btn-background.png';
+import { connect } from 'react-redux';
+import { resetBook } from '../redux/actions';
+import { FC, useEffect } from 'react';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 const BgButton = styled.div`
   position: relative;
@@ -45,7 +47,7 @@ const BgButton = styled.div`
 const Home: FC<any> = ({ resetBook }) => {
   useEffect(() => {
     resetBook();
-  }, []);
+  }, [resetBook]);
 
   return (
     <>
@@ -55,8 +57,8 @@ const Home: FC<any> = ({ resetBook }) => {
       <Services />
       <Advantages />
       <BgButton>
-        <a href="/book">Đặt dịch vụ ngay</a>
-        <img src={btn_background} />
+        <a href='/book'>Đặt dịch vụ ngay</a>
+        <img src={btn_background} alt='book' />
       </BgButton>
       <Feedbacks />
       <Footer />
