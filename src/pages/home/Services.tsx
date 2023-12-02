@@ -23,32 +23,41 @@ const Section = styled.section`
       display: flex;
 
       & > div {
-        width: 45%;
-        display: flex;
+        width: 100%;
+        
         justify-content: flex-end;
         & > img {
           width: 80%;
           height: 580px;
           object-fit: contain;
         }
+        display: none;
+        @media (min-width: 768px) {
+          width: 45%;
+          display: flex;
+        } 
       }
 
       & > .services {
-        width: 55%;
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        @media (min-width: 768px) {
+          width: 45%;
+        }
       }
     }
   }
 `;
 
 const Service = styled.div`
-  width: 49%;
+  width: 100%;
   border: 1px solid #c0c0c0;
   margin-bottom: 20px;
   padding: 10px 30px;
   text-align: center;
+
 
   & > img {
     width: auto;
@@ -66,7 +75,13 @@ const Service = styled.div`
     color: #757575;
     font-weight: 300;
   }
+
+  
 `;
+
+const SerViceMainImg = styled.div`
+  
+`
 
 const Services = () => {
   return (
@@ -109,9 +124,9 @@ const Services = () => {
               </p>
             </Service>
           </div>
-          <div>
+          <SerViceMainImg>
             <img src={people} />
-          </div>
+          </SerViceMainImg>
         </div>
       </div>
     </Section>

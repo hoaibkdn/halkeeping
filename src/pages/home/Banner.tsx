@@ -52,7 +52,7 @@ export const BannerContent = styled.div`
     background-color: rgba(255, 242, 223, 0.2);
     padding: 0px;
     display: flex;
-    width: 70%;
+    width: 100%;
     justify-content: center;
     align-items: center;
     margin: 50px auto;

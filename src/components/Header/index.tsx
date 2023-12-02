@@ -32,7 +32,8 @@ const HeaderWrapper = styled.header`
 
 const Logo = styled.h1`
   margin: 0;
-  width: 60px;
+  // width: 60px;
+  padding-left: 20px;
   height: 60px;
   z-index: 100;
   display: flex;

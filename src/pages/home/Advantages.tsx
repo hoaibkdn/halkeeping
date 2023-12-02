@@ -17,7 +17,10 @@ const Section = styled.section`
     }
 
     & > div {
-      display: flex;
+      display: block;
+      @media (min-width: 768px) {
+        display: flex;
+      }
       justify-content: space-between;
     }
   }

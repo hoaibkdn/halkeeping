@@ -53,7 +53,7 @@ const Feedbacks = () => {
         <h4>NHẬN XÉT TỪ KHÁCH HÀNG</h4>
         <Carousel
           autoplay
-          style={{ width: "716px", height: "322px", margin: "auto" }}
+          // style={{ width: "716px", height: "322px", margin: "auto" }}
         >
           <div>
             <img className="d-block w-100" src={review1} alt="First slide" />
