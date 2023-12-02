@@ -1,9 +1,6 @@
-import {
-  Form,
-  Schema,
-  ButtonToolbar,
-  Button,
-} from 'rsuite';
+/** @format */
+
+import { Form, Schema, ButtonToolbar, Button } from 'rsuite';
 import { useRef, useEffect, useState, FC } from 'react';
 import Field from '../../../components/Form/Field';
 import { asyncCheckPhone } from '../../../components/Form/form';
@@ -21,7 +18,7 @@ export interface PublicReducer {
 
 interface State {
   publicPages: PublicReducer;
-  adminInfo: AdminReducer
+  adminInfo: AdminReducer;
 }
 
 const Title = styled.h6`
@@ -31,9 +28,14 @@ const Title = styled.h6`
   font-weight: 650;
 `;
 
-const AddCleanerForm: FC<any> = ({ addCleaner, getCustomerDetails, customerDetails, editCustomer }) => {
-  console.log('customerDetails', customerDetails)
-  const id = window.location.pathname.split("/").pop();
+const AddCleanerForm: FC<any> = ({
+  addCleaner,
+  getCustomerDetails,
+  customerDetails,
+  editCustomer,
+}) => {
+  console.log('customerDetails', customerDetails);
+  const id = window.location.pathname.split('/').pop();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -43,16 +45,15 @@ const AddCleanerForm: FC<any> = ({ addCleaner, getCustomerDetails, customerDetai
   const formRef = useRef();
   const history = useHistory();
 
+  useEffect(() => {
+    getCustomerDetails(id);
+  }, [id, getCustomerDetails]);
 
   useEffect(() => {
-    getCustomerDetails(id)
-  }, [id])
-
-  useEffect(() => {
-    if(id && customerDetails) {
-      setFormData(customerDetails)
+    if (id && customerDetails) {
+      setFormData(customerDetails);
     }
-  }, [id, customerDetails])
+  }, [id, customerDetails]);
 
   // const onChangeDistricts = useCallback((val: string) => {
   //   const options = getWards(val);
@@ -76,24 +77,22 @@ const AddCleanerForm: FC<any> = ({ addCleaner, getCustomerDetails, customerDetai
 
   const onSubmit = async () => {
     if ((formRef?.current as any)?.check()) {
-      const {
-        name,
-        phone,
-        address,
-        email,
-      } = formData;
+      const { name, phone, address, email } = formData;
 
-      if(id) {
-        await editCustomer({
-          name,
-          phone,
-          email,
-          address,
-        }, id);
-  
+      if (id) {
+        await editCustomer(
+          {
+            name,
+            phone,
+            email,
+            address,
+          },
+          id
+        );
+
         history.push(`/admin/customers`);
 
-        return
+        return;
       }
 
       // await addC({
@@ -115,8 +114,7 @@ const AddCleanerForm: FC<any> = ({ addCleaner, getCustomerDetails, customerDetai
         ref={formRef as any}
         model={model}
         onChange={setFormData}
-        formValue={formData}
-      >
+        formValue={formData}>
         <Field
           label='Teen Khách hàng'
           name='name'
@@ -133,11 +131,7 @@ const AddCleanerForm: FC<any> = ({ addCleaner, getCustomerDetails, customerDetai
           name='address'
           placeholder='Vui lòng điền thông tin địa chỉ cụ thể'
         />
-        <Field
-          label='Email'
-          name='email'
-          placeholder='Nhập email'
-        />  
+        <Field label='Email' name='email' placeholder='Nhập email' />
 
         <ButtonToolbar>
           <Button appearance='primary' type='submit' onClick={onSubmit}>
@@ -154,17 +148,17 @@ const mapDispatchToProps = {
   // getProvinces,
   addCleaner,
   getCustomerDetails,
-  editCustomer
+  editCustomer,
 };
 
-const mapStateToProps = (state: State) => { 
-
+const mapStateToProps = (state: State) => {
   // console.log('state?.publicPages?.customers', state?.publicPages)
-  
-  return{
-  // provinces: state?.publicPages.province,
-  customerDetails: state?.adminInfo?.customers.customerDetail
-}};
+
+  return {
+    // provinces: state?.publicPages.province,
+    customerDetails: state?.adminInfo?.customers.customerDetail,
+  };
+};
 
 export default connect(
   mapStateToProps,
