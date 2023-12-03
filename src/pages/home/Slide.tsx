@@ -75,10 +75,9 @@ const Slide = () => {
     <Section>
       <div>
         <h4>HALKEEPING CÂN HẾT MỌI RÁC BẨN</h4>
-
         <Carousel responsive={responsive} itemClass='image-item'>
-          {image.map((item) => (
-            <img src={item} alt='gabage' />
+          {image.map((item, index) => (
+            <img key={index} src={item} alt='gabage' />
           ))}
         </Carousel>
       </div>
