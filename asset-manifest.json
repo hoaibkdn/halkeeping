@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/static/css/main.07690c5f.css",
+    "main.js": "/static/js/main.3124ec39.js",
+    "static/js/787.3405142c.chunk.js": "/static/js/787.3405142c.chunk.js",
+    "static/media/banner_v2.png": "/static/media/banner_v2.89397d38592911e9565e.png",
+    "static/media/before_2.jpg": "/static/media/before_2.356f8e26db11bf02462b.jpg",
+    "static/media/before_5.jpg": "/static/media/before_5.fcbf31d150cdaf85d444.jpg",
+    "static/media/after_5.jpg": "/static/media/after_5.ee456e4a155d2624fa8e.jpg",
+    "static/media/before_4.jpg": "/static/media/before_4.78a364d1ac6daf0663f5.jpg",
+    "static/media/after_6.jpg": "/static/media/after_6.81e3a1b6f6d4a69f321c.jpg",
+    "static/media/before_1.jpg": "/static/media/before_1.7713b70d8fae17c248ec.jpg",
+    "static/media/after_4.jpg": "/static/media/after_4.58033f24063f48c1e766.jpg",
+    "static/media/before_6.jpg": "/static/media/before_6.3b887a95f9b7cab30f0e.jpg",
+    "static/media/btn-background.png": "/static/media/btn-background.a0f8372cbf50bb18aa1e.png",
+    "static/media/review_3.png": "/static/media/review_3.276e787fd34c7c5fb3c4.png",
+    "static/media/people.png": "/static/media/people.6a825c2f08739d09599c.png",
+    "static/media/after_1.jpg": "/static/media/after_1.568ae33318642e4bb369.jpg",
+    "static/media/review_2.png": "/static/media/review_2.e1393e1331f0ae648641.png",
+    "static/media/after_2.jpg": "/static/media/after_2.1a60728bfad416665e7f.jpg",
+    "static/media/review_4.png": "/static/media/review_4.88e440afd01529066b57.png",
+    "static/media/consultant.png": "/static/media/consultant.54c06f33b1de629146d6.png",
+    "static/media/listen-to-custumer.png": "/static/media/listen-to-custumer.270d9ce7b99188f5bf35.png",
+    "static/media/review_1.png": "/static/media/review_1.2a82f1a39bd2d7f35d57.png",
+    "static/media/hard-working.png": "/static/media/hard-working.5c9389955ce60761dbba.png",
+    "static/media/revicons.eot": "/static/media/revicons.a77de540a38981833f9e.eot",
+    "static/media/revicons.ttf": "/static/media/revicons.57fd05d4ae650374c8de.ttf",
+    "static/media/zalo.png": "/static/media/zalo.504a8e2df65b04eed130.png",
+    "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
+    "index.html": "/index.html",
+    "main.07690c5f.css.map": "/static/css/main.07690c5f.css.map",
+    "main.3124ec39.js.map": "/static/js/main.3124ec39.js.map",
+    "787.3405142c.chunk.js.map": "/static/js/787.3405142c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.07690c5f.css",
+    "static/js/main.3124ec39.js"
+  ]
+}
