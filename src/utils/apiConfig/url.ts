@@ -1,5 +1,6 @@
 // @ts-nocheck
-export const BASE_URL = "https://halkeeping.herokuapp.com"
+// export const BASE_URL = "https://halkeeping.herokuapp.com"
+export const BASE_URL = "https://halkeeping.onrender.com"
 // export const BASE_URL = "http://localhost:3000"
 
 export const createActionType = (rootType: string) => {
