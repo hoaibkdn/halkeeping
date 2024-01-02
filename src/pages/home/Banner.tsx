@@ -4,6 +4,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import banner from '../../assets/images/banner_v2.png';
+import { Link } from 'react-router-dom';
 
 export const BannerWrapper = styled.section`
   position: relative;
@@ -96,9 +97,9 @@ const Banner: FC<BannerProps> = () => {
           <li className='center'>Trung thực</li>
           <li>Nhanh nhẹn</li>
         </ul>
-        <a href='/book' className='order-btn'>
+        <Link to='/book' className='order-btn'>
           Đặt dọn vệ sinh ngay
-        </a>
+        </Link>
       </BannerContent>
       <picture>
         {/* <source srcSet={banner} media='(min-width: 800px)' />
