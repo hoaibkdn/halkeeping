@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { configCRUD } from "../../utils/apiConfig/api-config-crud"
+export const BASE_URL = "https://halkeeping.onrender.com"
 
 const config = configCRUD()
 
@@ -23,7 +24,7 @@ export async function getProvinces() {
     },
   }
   return await fetch(
-    `https://halkeeping.herokuapp.com/api/provinces?code=48`,
+    `${BASE_URL}/api/provinces?code=48`,
     requestOption
   ).then((response) => response.json())
 }

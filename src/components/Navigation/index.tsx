@@ -1,12 +1,14 @@
+/** @format */
+
 // @ts-nocheck
-import React, { FC } from "react"
-import styled from "styled-components"
-import Item from "./Item"
+import React, { FC } from 'react';
+import styled from 'styled-components';
+import Item from './Item';
 
 // import fb from "../../assets/images/icons/facebook.png"
 // import yout from "../../assets/images/icons/youtube.png"
 // import ins from "../../assets/images/icons/instagram.png"
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom';
 
 const NavList = styled.ul`
   display: flex;
@@ -65,10 +67,10 @@ const NavList = styled.ul`
     position: inherit;
     height: max-content;
   }
-`
+`;
 
 const BookButton = styled(Link)`
-  background-color: #042C41;
+  background-color: #042c41;
   padding: 11px 40px 12px 40px;
   color: white;
   font-size: 16px;
@@ -79,22 +81,18 @@ const BookButton = styled(Link)`
     color: white;
     text-decoration: none;
   }
-`
+`;
 
 interface NavigationProps {
-  nav: Array<Link>
-  active: string
-  isOpened: boolean
+  nav: Array<Link>;
+  active: string;
+  isOpened: boolean;
 }
 
-const Navigation: FC<NavigationProps> = ({
-  nav,
-  active,
-  isOpened,
-}) => (
-  <NavList className={`${isOpened ? "opened" : ""}`}>
-        <li className="contact">
-      <BookButton to="/book">Đặt dịch vụ</BookButton>
+const Navigation: FC<NavigationProps> = ({ nav, active, isOpened }) => (
+  <NavList className={`${isOpened ? 'opened' : ''}`}>
+    <li className='contact'>
+      <BookButton to='/book'>Đặt dọn vệ sinh</BookButton>
     </li>
     {nav.map((item) => (
       <Item item={item} key={item.name} active={active} />
@@ -117,6 +115,6 @@ const Navigation: FC<NavigationProps> = ({
       </a>
     </li> */}
   </NavList>
-)
+);
 
-export default Navigation
+export default Navigation;

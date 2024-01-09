@@ -1,17 +1,19 @@
+/** @format */
+
 // @ts-nocheck
-import { Component } from "react";
+import { Component } from 'react';
 
-import store, { persistor } from "./reduxStore/store";
-import { Provider } from "react-redux";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { PersistGate } from "redux-persist/integration/react";
+import store, { persistor } from './reduxStore/store';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import Home from "./pages/home";
-import Book from "./pages/book";
-import BookConfirm from "./pages/book/BookConfirm";
-import Login from "./pages/login";
-import DashboardAdmin from "./pages/admin";
-import Contact from "./pages/contact";
+import Home from './pages/home';
+import Book from './pages/book';
+import BookConfirm from './pages/book/BookConfirm';
+import Login from './pages/login';
+import DashboardAdmin from './pages/admin';
+import Contact from './pages/contact';
 
 class App extends Component {
   render() {

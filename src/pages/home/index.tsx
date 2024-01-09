@@ -12,6 +12,7 @@ import { resetBook } from '../redux/actions';
 import { FC, useEffect } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { Link } from 'react-router-dom';
 
 const BgButton = styled.div`
   position: relative;
@@ -57,7 +58,7 @@ const Home: FC<any> = ({ resetBook }) => {
       <Services />
       <Advantages />
       <BgButton>
-        <a href='/book'>Đặt dịch vụ ngay</a>
+        <Link to='/#/book'>Đặt dọn vệ sinh ngay</Link>
         <img src={btn_background} alt='book' />
       </BgButton>
       <Feedbacks />
