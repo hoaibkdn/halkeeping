@@ -98,7 +98,7 @@ const Banner: FC<BannerProps> = () => {
           <li>Nhanh nhẹn</li>
         </ul>
         <Link to='/book' className='order-btn'>
-          Đặt dọn vệ sinh ngay
+          Đặt dọn vệ sinh
         </Link>
       </BannerContent>
       <picture>
